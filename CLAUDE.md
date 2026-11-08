@@ -12,7 +12,8 @@ Web de **Mercería Belén**, mercería de barrio en La Viña (Lorca, Murcia). Cl
 - Paso a paso: se propone el cambio, el cliente/ScilaAI decide, y solo entonces se toca el código.
 - **No inventar datos del negocio.** Lo que no se sepa se marca como pendiente (`<!-- EDITAR: ... -->` en el HTML o `<span class="pendiente">` en los textos legales).
 - Al terminar cada cambio: commit y push a `main`.
-- Sin frameworks ni build: un único `index.html` con HTML, CSS y JS en línea. Mantenerlo así salvo decisión explícita.
+- Sin frameworks ni build: un único `index.html` con HTML, CSS y JS en línea (más las tipografías en `fuentes/`). Mantenerlo así salvo decisión explícita.
+- **Nunca escribir `</script>` dentro del JS en línea, ni siquiera en un comentario**: el navegador cierra ahí el bloque y todo el JS deja de funcionar.
 - Idioma de la web y del código (clases, variables, comentarios): español.
 
 ## Datos reales del negocio (confirmados)
@@ -65,7 +66,7 @@ No tienen fuente. No volver a ponerlos sin confirmación:
 3. Confirmar horario actual, festivos y si cambia en verano — sección Visítanos.
 4. Confirmar que el 690 70 38 62 tiene WhatsApp — antes del formulario.
 5. Confirmar email y redes sociales — pie de página.
-6. Sustituir los textos `.pendiente` de los modales legales por titular, NIF y email reales, y revisar con asesoría.
+6. Sustituir los textos `.pendiente` de los modales legales por titular, NIF y email reales, revisar con asesoría y actualizar «Última actualización».
 
 ## Identidad visual
 
@@ -91,10 +92,14 @@ Otros fijos: `#DCE5D6` (tarjeta bebé), `#E7DCCB` (mapa), `#2FA36B` (punto «abi
 
 Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 
-### Tipografías (Google Fonts)
+### Tipografías (servidas desde la propia web, sin Google Fonts)
 
 - **Fraunces** (`--serif`), variable con ejes `opsz`, `wght` 300–800 y `SOFT` (se usa `SOFT 100`). Títulos, cifras, cursivas en coral.
-- **Manrope** (`--sans`) 400/500/600/700. Texto, botones, etiquetas.
+- **Manrope** (`--sans`) 400–700 (un solo archivo variable). Texto, botones, etiquetas.
+- Archivos en `fuentes/`: un `.woff2` por familia/estilo y juego de caracteres (`latin` y `latin-ext`), descargados de Google Fonts con la misma petición que usaba la web. Los `@font-face` están al principio del `<style>`, con `unicode-range`: el navegador solo baja `latin-ext` si hace falta (en español basta con `latin`).
+- Se precargan (`<link rel="preload">`) los tres `latin`: Fraunces normal, Fraunces cursiva y Manrope.
+- Licencia SIL Open Font License 1.1: `fuentes/OFL-Fraunces.txt` y `fuentes/OFL-Manrope.txt`. Hay que mantenerlas junto a las fuentes.
+- Solo cubren los caracteres de esos juegos: por ejemplo, la flecha «→» no está y saldría en otra fuente (se usa «›»).
 
 ## Estructura de la página
 
@@ -110,10 +115,11 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 | 04 | Visítanos | `#visitanos` | Horario (resalta hoy) + mapa ilustrado + Google Maps |
 | 05 | Pregúntanos | `#pregunta` | Formulario que abre WhatsApp con el mensaje (no guarda datos) |
 | 06 | Preguntas frecuentes | `#faq` | `<details>` |
-| — | Pie | `.pie` | Lema grande, datos, enlaces legales, créditos ScilaAI |
+| — | Pie | `.pie` | Lema grande, datos, enlaces legales (+ «Configurar cookies»), créditos ScilaAI |
 | — | WhatsApp flotante | `#wa-flotante` | Solo > 640px |
 | — | Barra de contacto móvil | `#barra-movil` | Solo ≤ 640px: Llamar / WhatsApp / Cómo llegar, fija abajo. `body` lleva `padding-bottom` para que no tape el pie |
-| — | Modales legales | `dialog#modal-*` | Aviso legal, privacidad, cookies |
+| — | Aviso de cookies | `#aviso-cookies` | Primera visita, abajo. Escritorio: a la izquierda del botón de WhatsApp. Móvil: encima de la barra de contacto |
+| — | Modales | `dialog#modal-*` | Aviso legal, privacidad, cookies y `modal-config-cookies` (Configurar cookies) |
 
 ## JavaScript (en línea, al final)
 
@@ -126,7 +132,8 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - La barra móvil se oculta (`.oculta`) mientras se escribe en el formulario, para que no tape el campo con el teclado abierto.
 - Parallax de la escena con el ratón.
 - Formulario → `wa.me` con texto prellenado, trampa antispam `.trampa`.
-- Modales legales con `<dialog>`. Necesitan `margin:auto` en su CSS: el reset `*{margin:0}` quita el centrado que pone el navegador. Cualquier `<dialog>` nuevo usa la misma regla.
+- Modales con `<dialog>` (función `abreModal`): solo uno abierto a la vez; se cierran con la X, con Esc y tocando fuera; mientras hay uno abierto la página de detrás no se desplaza. Necesitan `margin:auto` en su CSS: el reset `*{margin:0}` quita el centrado que pone el navegador. Cualquier `<dialog>` nuevo usa la misma regla.
+- Cookies: aviso, panel de configuración y consentimiento (ver «Cookies y textos legales»).
 - Respeta `prefers-reduced-motion`.
 
 ## Animación de la portada
@@ -173,10 +180,40 @@ Qué hace la web:
 - **Tabla de horario**: cada fila es el próximo día de esa semana (hoy y los 6 siguientes). Si cae en la lista, en lugar de las horas pone «Cerrado · festivo 8 dic» o «Cerrado · vacaciones», en rosa y cursiva.
 - **Los días que ya cierran siempre (domingo) no se marcan**: en la tabla siguen diciendo solo «Cerrado» y el indicador dice lo de un domingo normal («Cerrado · abrimos mañana…»). La regla es por día completo: un sábado festivo sí se marca, porque normalmente abre por la mañana.
 
-## Sin cookies
+## Cookies y textos legales
 
-No hay analítica ni mapas embebidos. Solo Google Fonts como recurso de terceros (está declarado en la política de cookies). Si se añade algo de terceros, actualizar la política.
+**Hoy la web no usa cookies de terceros ni analíticas, y no carga nada de terceros al visitarla** (ni fuentes, ni mapas, ni scripts). Lo único que guarda es la elección de cookies.
+
+### Cómo funciona el consentimiento
+
+- **Aviso** (`#aviso-cookies`): sale en la primera visita, después de la animación de portada (al momento si hay `prefers-reduced-motion`). Botones «Rechazar» y «Aceptar» con el mismo estilo y tamaño (guía AEPD) y «Configurar».
+- **Panel** (`#modal-config-cookies`): técnicas (siempre activas) y analíticas (desactivadas por defecto).
+- **Se guarda** en `localStorage`, clave `mb-cookies`: `{version, fecha, tecnicas, analiticas}`.
+- **Vuelve a preguntar** pasados 12 meses (`COOKIES.dias`) o si cambia `COOKIES.version`.
+- **Si cambia la política** (nuevas cookies, otra finalidad…): actualizar el texto y la tabla de la política, la fecha de «Última actualización» y subir `COOKIES.version` en el JS (por ejemplo, a la fecha del cambio). Así se vuelve a preguntar a todo el mundo.
+- **Cambiar la elección**: enlace «Configurar cookies» del pie, o el botón dentro de la política de cookies.
+- Si se retira un permiso ya dado, la página se recarga para que no siga funcionando nada de esa categoría.
+- Si el navegador bloquea `localStorage`, la web funciona igual; simplemente volverá a preguntar en cada visita.
+
+### Cuando se añada analítica (u otra categoría)
+
+1. Poner el script bloqueado, sin que se ejecute: `type="text/plain"` y `data-cookies="analiticas"` (sirve con `src` o con código dentro). El JS lo activa solo si la persona acepta las analíticas.
+2. Otra opción desde JS: `window.cookiesMB.permitido('analiticas')` o escuchar el evento `cookies:eleccion` en `document`.
+3. Añadir cada cookie a la tabla de la política (nombre, finalidad, duración, tipo y si es de terceros), revisar privacidad (destinatarios y transferencias) y subir `COOKIES.version`.
+4. Si al retirar el consentimiento quedan cookies de ese proveedor, borrarlas o explicarlo en la política.
+
+### Textos legales (modales)
+
+- **Aviso legal** (LSSI-CE): titular, objeto, condiciones de uso, propiedad intelectual (incluye la licencia OFL de las fuentes), responsabilidad, enlaces, legislación y jurisdicción.
+- **Privacidad** (RGPD y LOPDGDD): responsable, datos y finalidades (WhatsApp, llamadas, datos técnicos del alojamiento), base legal, conservación, destinatarios (WhatsApp/Meta y **GitHub Pages**), transferencias internacionales, derechos, reclamación ante la AEPD.
+- **Cookies**: qué son, tabla, cómo cambiar la elección y cómo borrarlas en cada navegador.
+- Titular, NIF y email: «pendiente de publicar». **No inventar.**
+- Cada texto termina con «Última actualización: 8 de noviembre de 2026». Actualizarla cuando cambie el texto.
+- **Al pasar a dominio propio**: si cambia el alojamiento, revisar «Destinatarios» y «Transferencias internacionales» en privacidad (hoy nombran GitHub Pages).
+- Revisión pendiente con asesoría antes de dar la web por definitiva.
 
 ## Pruebas
 
 Antes de publicar cambios de maquetación, revisar a 390px (móvil) y 1280px (escritorio): sin scroll horizontal, la barra móvil no tapa el formulario ni el pie, y sin errores de JS.
+
+Probar con un servidor local (`python -m http.server`), no abriendo el archivo: con `file://` Chrome no carga las fuentes locales.

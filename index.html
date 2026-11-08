@@ -16,9 +16,10 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
 <meta property="og:description" content="Mercería, lencería y moda para mujer, hombre y bebé. Especialistas en tallas grandes. Trato cercano en el barrio de La Viña.">
 <!-- EDITAR: og:image (1200x630) con foto real del escaparate -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23E0485A'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%23F5EEE3' stroke-width='2' stroke-dasharray='4 4'/%3E%3Cg fill='%23F5EEE3'%3E%3Ccircle cx='25' cy='25' r='4'/%3E%3Ccircle cx='39' cy='25' r='4'/%3E%3Ccircle cx='25' cy='39' r='4'/%3E%3Ccircle cx='39' cy='39' r='4'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..800,50..100;1,9..144,300..800,50..100&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tipografías servidas desde la propia web (sin Google Fonts). Licencia SIL OFL 1.1 en /fuentes -->
+<link rel="preload" href="fuentes/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/fraunces-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <script type="application/ld+json">
 {
@@ -48,6 +49,20 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
 </script>
 
 <style>
+/* ---------- Tipografías propias ---------- */
+/* Fraunces italic latin-ext */
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:300 800;font-display:swap;src:url(fuentes/fraunces-italic-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+/* Fraunces italic latin */
+@font-face{font-family:'Fraunces';font-style:italic;font-weight:300 800;font-display:swap;src:url(fuentes/fraunces-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+/* Fraunces normal latin-ext */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:300 800;font-display:swap;src:url(fuentes/fraunces-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+/* Fraunces normal latin */
+@font-face{font-family:'Fraunces';font-style:normal;font-weight:300 800;font-display:swap;src:url(fuentes/fraunces-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+/* Manrope normal latin-ext */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;font-display:swap;src:url(fuentes/manrope-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+/* Manrope normal latin */
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;font-display:swap;src:url(fuentes/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+
 :root{
   --lino:#F5EEE3;
   --lino-2:#EDE3D3;
@@ -365,15 +380,55 @@ h2{font-size:clamp(40px,5.6vw,76px)}
 
 /* ---------- Modales legales ----------
    margin:auto es obligatorio: el reset *{margin:0} quita el margin:auto con el que el navegador centra los <dialog> */
-dialog{margin:auto;border:0;border-radius:24px;padding:0;max-width:min(720px, 100% - 24px);max-height:85vh;background:var(--papel);color:var(--tinta);box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+dialog{margin:auto;border:0;border-radius:24px;padding:0;max-width:min(720px, 100% - 24px);max-height:85vh;max-height:85dvh;background:var(--papel);color:var(--tinta);box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
 dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
-.modal-dentro{padding:40px;overflow:auto;max-height:85vh}
+.modal-dentro{padding:40px;overflow:auto;max-height:85vh;max-height:85dvh;overscroll-behavior:contain}
+html:has(dialog[open]){overflow:hidden} /* que no se mueva la página de detrás */
 .modal-dentro h3{font-size:32px;margin-bottom:18px}
 .modal-dentro h4{margin:20px 0 6px;font-size:16px}
 .modal-dentro p,.modal-dentro li{font-size:15px;color:var(--tinta-2);margin-bottom:8px}
 .modal-dentro ul{padding-left:20px}
 .cerrar{position:sticky;top:0;float:right;margin:-16px -16px 0 0;width:42px;height:42px;border-radius:50%;border:0;background:var(--tinta);color:var(--lino);font-size:22px;cursor:pointer}
 .pendiente{color:var(--gris);font-style:italic}
+.modal-dentro .ultima{font-size:13px;color:var(--gris);margin-top:26px;padding-top:14px;border-top:1.5px dashed rgba(36,18,38,.18)}
+.modal-dentro .enlace-btn{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.tabla-cookies{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0 14px;color:var(--tinta-2)}
+.tabla-cookies th,.tabla-cookies td{text-align:left;vertical-align:top;padding:10px 10px 10px 0;border-bottom:1.5px dashed rgba(36,18,38,.18)}
+.tabla-cookies th{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gris)}
+.tabla-cookies code{font-size:13px;background:rgba(36,18,38,.07);padding:1px 6px;border-radius:6px;color:var(--tinta)}
+
+/* ---------- Configurar cookies ---------- */
+.categoria{border:1.5px dashed rgba(36,18,38,.2);border-radius:16px;padding:16px 18px;margin:14px 0}
+.cat-cab{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.modal-dentro .cat-cab h4{margin:0}
+.modal-dentro .categoria p{margin:8px 0 0;font-size:14.5px}
+.cat-estado{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--tinta-2)}
+.interruptor{appearance:none;-webkit-appearance:none;margin:0;width:48px;height:28px;border-radius:999px;background:rgba(36,18,38,.22);position:relative;cursor:pointer;flex:none;transition:background .2s}
+.interruptor::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.interruptor:checked{background:var(--coral-osc)}
+.interruptor:checked::after{transform:translateX(20px)}
+.interruptor:disabled{cursor:not-allowed;opacity:.55}
+.interruptor:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+.config-botones{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.config-botones .boton{justify-content:center}
+.config-botones .boton-borde{grid-column:1 / -1}
+
+/* ---------- Aviso de cookies ---------- */
+.aviso-cookies{
+  position:fixed;right:92px;bottom:18px;z-index:70;width:min(520px, 100% - 128px);
+  background:var(--papel);color:var(--tinta);border-radius:22px;padding:22px 24px;
+  box-shadow:0 24px 50px -20px rgba(36,18,38,.55), 0 0 0 1px rgba(36,18,38,.07);
+  opacity:0;transform:translateY(16px);transition:opacity .35s, transform .45s cubic-bezier(.2,.8,.2,1)
+}
+.aviso-cookies.visible{opacity:1;transform:none}
+.aviso-cookies::before{content:"";position:absolute;inset:8px;border-radius:15px;border:1.5px dashed rgba(224,72,90,.5);pointer-events:none}
+.aviso-cookies h2{position:relative;font-size:20px;letter-spacing:-.01em;margin-bottom:6px}
+.aviso-cookies p{position:relative;font-size:14.5px;line-height:1.5;color:var(--tinta-2);margin-bottom:14px}
+.aviso-cookies .enlace-btn{font-weight:700;color:var(--tinta);text-decoration:underline;text-underline-offset:3px}
+.ac-botones{position:relative;display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center}
+.ac-botones .boton{justify-content:center;padding:11px 16px;font-size:14px}
+.boton-texto{background:none;border:0;font:inherit;font-size:14px;font-weight:700;color:var(--tinta);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:11px 10px;border-radius:999px}
+.boton-texto:hover{color:var(--coral-osc)}
 
 /* ---------- Aparición al hacer scroll ---------- */
 .aparece{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1)}
@@ -442,6 +497,18 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   .barra-movil svg{width:22px;height:22px}
   .barra-movil .b-wa svg{color:#25D366}
   .barra-movil.oculta{transform:translateY(calc(100% + 20px));opacity:0;pointer-events:none}
+  /* aviso de cookies encima de la barra de contacto */
+  .aviso-cookies{left:10px;right:10px;width:auto;bottom:calc(86px + env(safe-area-inset-bottom, 0px));padding:18px 18px 14px}
+  .ac-botones{grid-template-columns:1fr 1fr}
+  .ac-botones .boton-texto{grid-column:1 / -1;padding:6px}
+  /* textos legales cómodos en móvil */
+  .modal-dentro h3{font-size:28px;padding-right:44px}
+  .modal-dentro p,.modal-dentro li{font-size:15.5px;line-height:1.6}
+  .config-botones{grid-template-columns:1fr}
+  .tabla-cookies thead{display:none}
+  .tabla-cookies tr{display:block;border:1.5px dashed rgba(36,18,38,.2);border-radius:14px;padding:8px 14px;margin-bottom:10px}
+  .tabla-cookies td{display:grid;grid-template-columns:6.5em 1fr;gap:10px;border:0;padding:6px 0}
+  .tabla-cookies td::before{content:attr(data-th);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--gris);padding-top:2px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -453,6 +520,17 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 </style>
 </head>
 <body class="sin-js">
+
+<!-- Aviso de cookies (lo muestra el JS si no hay una elección guardada y vigente) -->
+<section class="aviso-cookies" id="aviso-cookies" aria-labelledby="aviso-cookies-titulo" hidden>
+  <h2 id="aviso-cookies-titulo">Cookies</h2>
+  <p>Usamos solo lo imprescindible para que la web funcione. Las cookies analíticas, que hoy no usamos, solo se activarían con tu permiso. <button class="enlace-btn" data-modal="cookies">Más información</button></p>
+  <div class="ac-botones">
+    <button class="boton boton-tinta" type="button" data-cookies-accion="rechazar">Rechazar</button>
+    <button class="boton boton-tinta" type="button" data-cookies-accion="aceptar">Aceptar</button>
+    <button class="boton-texto" type="button" data-cookies-accion="configurar">Configurar</button>
+  </div>
+</section>
 
 <!-- Hilo cosido que recorre la página (se dibuja con JS) -->
 <svg class="hilo" aria-hidden="true"><path class="guia"/><path class="cosido"/><circle class="aguja" r="4"/></svg>
@@ -837,6 +915,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
           <li><button class="enlace-btn" data-modal="aviso">Aviso legal</button></li>
           <li><button class="enlace-btn" data-modal="privacidad">Privacidad</button></li>
           <li><button class="enlace-btn" data-modal="cookies">Cookies</button></li>
+          <li><button class="enlace-btn" data-cookies-accion="configurar">Configurar cookies</button></li>
         </ul>
       </div>
     </div>
@@ -868,44 +947,166 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 </nav>
 
 <!-- ================= MODALES LEGALES ================= -->
-<!-- EDITAR: sustituir los textos .pendiente por titular, NIF y email reales y revisar con asesoría -->
-<dialog id="modal-aviso"><div class="modal-dentro">
-  <button class="cerrar" aria-label="Cerrar">×</button>
-  <h3>Aviso legal</h3>
-  <p>En cumplimiento de la Ley 34/2002 (LSSI-CE), se informa de los datos del titular de este sitio web:</p>
+<!-- EDITAR: sustituir los textos .pendiente por titular, NIF y email reales, revisar con asesoría y actualizar la fecha de «Última actualización».
+     Si cambia el alojamiento (dominio propio), revisar «Destinatarios» y «Transferencias» en privacidad.
+     Si cambian las cookies, actualizar la tabla y subir la versión COOKIES.version en el JS. -->
+<dialog id="modal-aviso" aria-labelledby="t-aviso"><div class="modal-dentro">
+  <button class="cerrar" type="button" aria-label="Cerrar">×</button>
+  <h3 id="t-aviso">Aviso legal</h3>
+
+  <h4>1. Titular de la web</h4>
+  <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), estos son los datos del titular de esta web:</p>
   <ul>
-    <li>Titular y NIF: <span class="pendiente">Datos del titular pendientes de publicar</span></li>
+    <li>Titular: <span class="pendiente">Datos del titular pendientes de publicar</span></li>
+    <li>NIF: <span class="pendiente">pendiente de publicar</span></li>
+    <li>Nombre comercial: Mercería Belén</li>
     <li>Domicilio: Ctra. de Granada, 19 Bajo, 30800 Lorca (Murcia)</li>
-    <li>Teléfono: 690 70 38 62 · Email: <span class="pendiente">pendiente de publicar</span></li>
+    <li>Teléfono: 690 70 38 62</li>
+    <li>Email: <span class="pendiente">pendiente de publicar</span></li>
   </ul>
-  <h4>Uso del sitio</h4>
-  <p>El acceso a esta web es gratuito e implica la aceptación de estas condiciones. Los contenidos tienen carácter informativo; precios y disponibilidad deben confirmarse en tienda.</p>
-  <h4>Propiedad intelectual</h4>
-  <p>Textos, diseño e ilustraciones de esta web pertenecen a su titular o se usan con autorización. No se permite su reproducción sin consentimiento.</p>
+
+  <h4>2. Objeto</h4>
+  <p>Esta web es el escaparate informativo de Mercería Belén, tienda física en el barrio de La Viña (Lorca). Sirve para dar a conocer la tienda, sus secciones, su horario y cómo llegar, y para facilitar el contacto por teléfono o WhatsApp. Desde la web no se venden productos ni se hacen pagos.</p>
+
+  <h4>3. Condiciones de uso</h4>
+  <p>El acceso a la web es libre y gratuito, y navegar por ella supone aceptar este aviso legal. Te comprometes a usarla de forma adecuada, conforme a la ley y a la buena fe, y a no emplearla para actividades ilícitas o que puedan dañar la web o a otras personas.</p>
+  <p>La información sobre productos, tallas, precios, horarios y disponibilidad es orientativa. Confírmala en la tienda o por teléfono antes de desplazarte.</p>
+
+  <h4>4. Propiedad intelectual e industrial</h4>
+  <p>Los textos, el diseño, las ilustraciones y el código de esta web pertenecen a su titular o se usan con autorización. No se permite reproducirlos, distribuirlos ni transformarlos sin permiso, salvo para uso personal y privado.</p>
+  <p>Las tipografías Fraunces y Manrope se usan bajo la licencia SIL Open Font License 1.1. Las marcas de terceros que aparecen en la web, como WhatsApp o Google Maps, pertenecen a sus titulares.</p>
+
+  <h4>5. Responsabilidad</h4>
+  <p>El titular procura que la información de la web sea correcta y esté actualizada, pero no garantiza que no haya errores ni que la web esté disponible en todo momento. No responde de los daños que puedan derivarse de interrupciones, fallos técnicos o del uso que se haga de la información publicada, salvo en los casos en que la ley lo establezca.</p>
+
+  <h4>6. Enlaces a otras webs</h4>
+  <p>La web incluye enlaces a servicios de terceros, como WhatsApp, Google Maps o la web de quien la ha diseñado. El titular no controla esos sitios ni responde de sus contenidos; al abrirlos se aplican sus propias condiciones y políticas.</p>
+
+  <h4>7. Legislación y jurisdicción</h4>
+  <p>Este aviso legal se rige por la legislación española. Cualquier controversia se resolverá ante los juzgados y tribunales que correspondan según la ley. Si quien usa la web es consumidor, serán competentes los de su domicilio.</p>
+
+  <p class="ultima">Última actualización: 8 de noviembre de 2026.</p>
 </div></dialog>
 
-<dialog id="modal-privacidad"><div class="modal-dentro">
-  <button class="cerrar" aria-label="Cerrar">×</button>
-  <h3>Política de privacidad</h3>
-  <h4>Responsable</h4>
-  <p><span class="pendiente">Datos del titular pendientes de publicar</span>. Ctra. de Granada, 19 Bajo, 30800 Lorca.</p>
-  <h4>Finalidad</h4>
-  <p>Atender las consultas que nos envíes a través del formulario, que se abren en WhatsApp con el texto que escribes. Esta web no guarda los datos del formulario: el mensaje solo llega si tú lo envías desde WhatsApp.</p>
-  <h4>Legitimación</h4>
-  <p>Tu consentimiento al enviar la consulta (art. 6.1.a RGPD).</p>
-  <h4>Conservación</h4>
-  <p>Durante el tiempo necesario para responder a tu consulta.</p>
-  <h4>Destinatarios</h4>
-  <p>No se ceden datos a terceros, salvo obligación legal. WhatsApp (Meta) trata los mensajes conforme a su propia política de privacidad.</p>
-  <h4>Derechos</h4>
-  <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad dirigiéndote por escrito a Ctra. de Granada, 19 Bajo, 30800 Lorca (email <span class="pendiente">pendiente de publicar</span>), y reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
+<dialog id="modal-privacidad" aria-labelledby="t-privacidad"><div class="modal-dentro">
+  <button class="cerrar" type="button" aria-label="Cerrar">×</button>
+  <h3 id="t-privacidad">Política de privacidad</h3>
+  <p>Te explicamos cómo tratamos tus datos personales, conforme al Reglamento (UE) 2016/679 General de Protección de Datos (RGPD) y a la Ley Orgánica 3/2018 de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD).</p>
+
+  <h4>1. Responsable del tratamiento</h4>
+  <ul>
+    <li>Titular: <span class="pendiente">Datos del titular pendientes de publicar</span></li>
+    <li>NIF: <span class="pendiente">pendiente de publicar</span></li>
+    <li>Domicilio: Ctra. de Granada, 19 Bajo, 30800 Lorca (Murcia)</li>
+    <li>Teléfono: 690 70 38 62</li>
+    <li>Email: <span class="pendiente">pendiente de publicar</span></li>
+  </ul>
+
+  <h4>2. Qué datos tratamos y para qué</h4>
+  <p>Esta web no tiene registro de usuarios ni guarda en ningún servidor lo que escribes. Solo tratamos los datos que tú decides darnos cuando contactas con nosotros:</p>
+  <ul>
+    <li><strong>Consultas por WhatsApp.</strong> El formulario de la web no envía nada por sí mismo: prepara el mensaje y lo abre en tu WhatsApp, y solo nos llega si tú lo envías. Tratamos tu nombre, tu número de teléfono, lo que nos cuentas y las fotos que adjuntes, para responderte (por ejemplo, si tenemos un artículo o una talla).</li>
+    <li><strong>Llamadas.</strong> Si nos llamas, tratamos tu número y lo que nos cuentes, para atender tu consulta.</li>
+    <li><strong>Datos técnicos de la visita.</strong> El servicio que aloja la web registra datos técnicos de la conexión, como la dirección IP, para poder servirla y protegerla. Nosotros no los usamos para identificarte ni para hacer estadísticas.</li>
+  </ul>
+  <p>No tomamos decisiones automatizadas ni elaboramos perfiles con tus datos.</p>
+
+  <h4>3. Base legal</h4>
+  <ul>
+    <li><strong>Atender tu consulta:</strong> tu consentimiento al escribirnos o llamarnos (art. 6.1.a RGPD) y la aplicación, a petición tuya, de medidas precontractuales (art. 6.1.b RGPD), como informarte sobre un producto antes de comprarlo.</li>
+    <li><strong>Datos técnicos de la visita:</strong> el interés legítimo en que la web funcione y sea segura (art. 6.1.f RGPD).</li>
+  </ul>
+  <p>Puedes retirar tu consentimiento cuando quieras, sin que eso afecte a lo tratado antes.</p>
+
+  <h4>4. Cuánto tiempo conservamos los datos</h4>
+  <p>Los datos de tu consulta, el tiempo necesario para atenderla. Después se suprimen, salvo que debamos guardarlos más tiempo por una obligación legal (por ejemplo, si la consulta acaba en una compra con factura). Los datos técnicos de la visita los conserva el servicio de alojamiento durante el plazo que fija su propia política.</p>
+
+  <h4>5. Destinatarios</h4>
+  <p>No cedemos tus datos a nadie, salvo obligación legal. Para que estos servicios funcionen intervienen:</p>
+  <ul>
+    <li><strong>WhatsApp</strong> (WhatsApp Ireland Limited, del grupo Meta), que presta el servicio de mensajería con el que nos escribes y trata los mensajes según su propia política de privacidad.</li>
+    <li><strong>GitHub Pages</strong> (GitHub, Inc.), que aloja esta web y registra los datos técnicos de la conexión.</li>
+  </ul>
+
+  <h4>6. Transferencias internacionales</h4>
+  <p>WhatsApp (grupo Meta) y GitHub pueden tratar datos en Estados Unidos. Según indica cada proveedor, esas transferencias se amparan en el Marco de Privacidad de Datos UE-EE. UU. o en las cláusulas contractuales tipo aprobadas por la Comisión Europea.</p>
+
+  <h4>7. Tus derechos y cómo ejercerlos</h4>
+  <p>Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad, y retirar tu consentimiento.</p>
+  <p>Para hacerlo, escríbenos a Ctra. de Granada, 19 Bajo, 30800 Lorca (Murcia), o al email <span class="pendiente">pendiente de publicar</span>, indicando qué derecho quieres ejercer y acreditando tu identidad. Te responderemos en el plazo máximo de un mes.</p>
+
+  <h4>8. Reclamación ante la AEPD</h4>
+  <p>Si crees que no hemos tratado bien tus datos, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es · C/ Jorge Juan, 6, 28001 Madrid).</p>
+
+  <p class="ultima">Última actualización: 8 de noviembre de 2026.</p>
 </div></dialog>
 
-<dialog id="modal-cookies"><div class="modal-dentro">
-  <button class="cerrar" aria-label="Cerrar">×</button>
-  <h3>Política de cookies</h3>
-  <p>Esta web no instala cookies propias ni de analítica o publicidad. Las tipografías se cargan desde Google Fonts, que puede registrar datos técnicos de la conexión (como la dirección IP) conforme a su política.</p>
-  <p>El mapa es una ilustración: Google Maps solo se abre si pulsas el botón, y en ese caso se aplican las condiciones de Google.</p>
+<dialog id="modal-cookies" aria-labelledby="t-cookies"><div class="modal-dentro">
+  <button class="cerrar" type="button" aria-label="Cerrar">×</button>
+  <h3 id="t-cookies">Política de cookies</h3>
+
+  <h4>1. Qué son las cookies</h4>
+  <p>Las cookies son pequeños archivos que una web guarda en tu navegador para recordar información de tu visita. Hay tecnologías parecidas, como el almacenamiento local del navegador (localStorage), a las que se aplican las mismas normas. En esta política llamamos «cookies» a todas ellas.</p>
+
+  <h4>2. Qué cookies usa esta web</h4>
+  <p>Solo una, técnica y propia, para recordar tu elección sobre cookies. No usamos cookies de análisis, de publicidad ni de redes sociales. Al visitar la web no se carga nada de terceros: las tipografías se sirven desde la propia web.</p>
+  <table class="tabla-cookies">
+    <thead><tr><th scope="col">Nombre</th><th scope="col">Finalidad</th><th scope="col">Duración</th><th scope="col">Tipo</th></tr></thead>
+    <tbody>
+      <tr>
+        <td data-th="Nombre"><code>mb-cookies</code></td>
+        <td data-th="Finalidad">Recordar si has aceptado, rechazado o configurado las cookies, para no volver a preguntarte.</td>
+        <td data-th="Duración">12 meses</td>
+        <td data-th="Tipo">Técnica, propia (almacenamiento local)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Si en el futuro usamos cookies analíticas, aparecerán en esta tabla y solo se activarán si las aceptas.</p>
+  <p>Los botones de WhatsApp y Google Maps te llevan a servicios de terceros solo si los pulsas. A partir de ahí se aplican sus propias políticas de cookies.</p>
+
+  <h4>3. Cómo cambiar tu elección</h4>
+  <p>Puedes cambiarla cuando quieras desde <button class="enlace-btn" type="button" data-cookies-accion="configurar">Configurar cookies</button>, que también está en el pie de la web. Tu elección se guarda 12 meses; pasado ese tiempo, o si cambia esta política, te volveremos a preguntar.</p>
+
+  <h4>4. Cómo borrar las cookies en tu navegador</h4>
+  <p>También puedes borrar o bloquear las cookies desde la configuración de tu navegador:</p>
+  <ul>
+    <li><strong>Chrome:</strong> Configuración › Privacidad y seguridad › Eliminar datos de navegación.</li>
+    <li><strong>Firefox:</strong> Ajustes › Privacidad &amp; Seguridad › Cookies y datos del sitio › Limpiar datos.</li>
+    <li><strong>Safari (Mac):</strong> Ajustes › Privacidad › Gestionar datos de sitios web.</li>
+    <li><strong>Safari (iPhone y iPad):</strong> Ajustes › Safari › Avanzado › Datos de sitios web.</li>
+    <li><strong>Edge:</strong> Configuración › Privacidad, búsqueda y servicios › Borrar datos de exploración.</li>
+  </ul>
+  <p>Si borras los datos de esta web, se perderá tu elección y te volveremos a preguntar.</p>
+
+  <p class="ultima">Última actualización: 8 de noviembre de 2026.</p>
+</div></dialog>
+
+<dialog id="modal-config-cookies" aria-labelledby="t-config-cookies"><div class="modal-dentro">
+  <button class="cerrar" type="button" aria-label="Cerrar">×</button>
+  <h3 id="t-config-cookies">Configurar cookies</h3>
+  <p>Elige qué permites. Puedes cambiarlo cuando quieras desde «Configurar cookies», en el pie de la web. <button class="enlace-btn" type="button" data-modal="cookies">Ver la política de cookies</button></p>
+
+  <div class="categoria">
+    <div class="cat-cab">
+      <h4 id="cat-tecnicas">Técnicas</h4>
+      <span class="cat-estado">Siempre activas <input class="interruptor" type="checkbox" role="switch" checked disabled aria-labelledby="cat-tecnicas"></span>
+    </div>
+    <p>Necesarias para que la web funcione y para recordar tu elección sobre cookies. No se pueden desactivar.</p>
+  </div>
+
+  <div class="categoria">
+    <div class="cat-cab">
+      <h4 id="cat-analiticas">Analíticas</h4>
+      <input class="interruptor" type="checkbox" role="switch" id="c-analiticas" aria-labelledby="cat-analiticas" aria-describedby="cat-analiticas-desc">
+    </div>
+    <p id="cat-analiticas-desc">Servirían para saber, de forma agregada, cuántas personas visitan la web y qué secciones miran. Hoy esta web no usa ninguna; si se añaden, solo se activarán si las permites aquí.</p>
+  </div>
+
+  <div class="config-botones">
+    <button class="boton boton-tinta" type="button" data-cookies-accion="rechazar">Rechazar todas</button>
+    <button class="boton boton-tinta" type="button" data-cookies-accion="aceptar">Aceptar todas</button>
+    <button class="boton boton-borde" type="button" data-cookies-accion="guardar">Guardar mi elección</button>
+  </div>
 </div></dialog>
 
 <script>
@@ -1152,7 +1353,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
     });
   }
 
-  /* ---- Formulario → WhatsApp ---- */
+  /* ---- Formulario › WhatsApp ---- */
   var form = document.getElementById('formulario'), err = document.getElementById('error');
   var barra = document.getElementById('barra-movil');
   function escribe(el){ return el.matches('textarea, input:not([type]), input[type=text]'); }
@@ -1170,18 +1371,92 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
     window.open('https://wa.me/34690703862?text=' + encodeURIComponent(texto), '_blank', 'noopener');
   });
 
-  /* ---- Modales legales ---- */
+  /* ---- Modales (legales y configuración de cookies) ----
+     Se cierran con la X, con Esc (nativo de <dialog>) y tocando fuera. Solo hay uno abierto a la vez. */
+  function abreModal(m){
+    if (!m || !m.showModal) return;
+    document.querySelectorAll('dialog[open]').forEach(function(d){ if (d !== m) d.close(); });
+    if (!m.open) m.showModal();
+    var dentro = m.querySelector('.modal-dentro'); if (dentro) dentro.scrollTop = 0;
+  }
   document.querySelectorAll('[data-modal]').forEach(function(b){
     b.addEventListener('click', function(e){
       e.preventDefault();
-      var m = document.getElementById('modal-' + b.getAttribute('data-modal'));
-      if (m && m.showModal) m.showModal();
+      abreModal(document.getElementById('modal-' + b.getAttribute('data-modal')));
     });
   });
   document.querySelectorAll('dialog').forEach(function(d){
     d.querySelector('.cerrar').addEventListener('click', function(){ d.close(); });
-    d.addEventListener('click', function(e){ if (e.target === d) d.close(); });
+    d.addEventListener('click', function(e){ if (e.target === d) d.close(); }); // el fondo es el propio <dialog>
   });
+
+  /* ---- Cookies: aviso, configuración y consentimiento ----
+     La elección se guarda en localStorage («mb-cookies») 12 meses. Si cambia la política, subir COOKIES.version
+     y se volverá a preguntar a todo el mundo.
+     Para añadir un script analítico sin que se ejecute antes de aceptar: ponerle type="text/plain"
+     y data-cookies="analiticas". Solo se activa si la persona acepta las analíticas. Ver CLAUDE.md. */
+  var COOKIES = { clave: 'mb-cookies', version: '2026-11-08', dias: 365 };
+  var aviso = document.getElementById('aviso-cookies'), cfg = document.getElementById('modal-config-cookies'), swAnaliticas = document.getElementById('c-analiticas');
+  function leeEleccion(){
+    try{
+      var c = JSON.parse(localStorage.getItem(COOKIES.clave));
+      if (!c || c.version !== COOKIES.version || !(Date.now() - c.fecha < COOKIES.dias * 864e5)) return null;
+      return c;
+    }catch(e){ return null; }
+  }
+  function activaScripts(categoria){
+    document.querySelectorAll('script[type="text/plain"][data-cookies="' + categoria + '"]').forEach(function(viejo){
+      var nuevo = document.createElement('script');
+      Array.prototype.forEach.call(viejo.attributes, function(a){ if (a.name !== 'type' && a.name !== 'data-cookies') nuevo.setAttribute(a.name, a.value); });
+      nuevo.text = viejo.text;
+      viejo.parentNode.replaceChild(nuevo, viejo);
+    });
+  }
+  function aplicaEleccion(c){
+    if (c && c.analiticas) activaScripts('analiticas');
+    try{ document.dispatchEvent(new CustomEvent('cookies:eleccion', {detail: c})); }catch(e){}
+  }
+  function muestraAviso(){
+    if (leeEleccion()) return;
+    aviso.hidden = false;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ aviso.classList.add('visible'); }); });
+  }
+  function ocultaAviso(){
+    aviso.classList.remove('visible');
+    setTimeout(function(){ aviso.hidden = true; }, reducir ? 0 : 350);
+  }
+  function guardaEleccion(analiticas){
+    var antes = leeEleccion(), c = {version: COOKIES.version, fecha: Date.now(), tecnicas: true, analiticas: !!analiticas};
+    try{ localStorage.setItem(COOKIES.clave, JSON.stringify(c)); }catch(e){}
+    if (cfg.open) cfg.close();
+    ocultaAviso();
+    // Si se retira un permiso ya dado, recargar para que no siga funcionando nada de esa categoría
+    if (antes && antes.analiticas && !c.analiticas){ location.reload(); return; }
+    aplicaEleccion(c);
+  }
+  function abreConfig(){
+    var c = leeEleccion();
+    swAnaliticas.checked = !!(c && c.analiticas);
+    abreModal(cfg);
+  }
+  window.cookiesMB = {
+    eleccion: leeEleccion,
+    permitido: function(categoria){ var c = leeEleccion(); return categoria === 'tecnicas' || !!(c && c[categoria]); },
+    configurar: abreConfig
+  };
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-cookies-accion]');
+    if (!b) return;
+    e.preventDefault();
+    var accion = b.getAttribute('data-cookies-accion');
+    if (accion === 'aceptar') guardaEleccion(true);
+    else if (accion === 'rechazar') guardaEleccion(false);
+    else if (accion === 'guardar') guardaEleccion(swAnaliticas.checked);
+    else if (accion === 'configurar') abreConfig();
+  });
+  var eleccionGuardada = leeEleccion();
+  if (eleccionGuardada) aplicaEleccion(eleccionGuardada);
+  else setTimeout(muestraAviso, reducir ? 0 : 2600); // tras la animación de portada, para no taparla
 })();
 </script>
 </body>
