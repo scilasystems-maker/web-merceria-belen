@@ -330,6 +330,9 @@ h2{font-size:clamp(40px,5.6vw,76px)}
 .wa-flotante:hover{transform:scale(1.08) rotate(-6deg)}
 .wa-flotante svg{width:30px;height:30px}
 
+/* ---------- Barra de contacto en móvil ---------- */
+.barra-movil{display:none}
+
 /* ---------- Modales legales ---------- */
 dialog{border:0;border-radius:24px;padding:0;max-width:min(720px, 100% - 24px);max-height:85vh;background:var(--papel);color:var(--tinta);box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
 dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
@@ -370,7 +373,10 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   .pie-cols{grid-template-columns:1fr 1fr}
   .metro{max-width:520px}
 }
-@media (max-width:700px){ .hilo{display:none} }
+@media (max-width:700px){
+  .hilo .cosido{stroke-width:1.6;opacity:.7}
+  .hilo .guia{stroke-width:1.2;stroke-dasharray:4 5;stroke-opacity:.14}
+}
 @media (max-width:640px){
   body{font-size:16px}
   .bento{grid-auto-rows:auto}
@@ -389,6 +395,22 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   .pie-cols{grid-template-columns:1fr}
   .faq details p{padding-right:0}
   .datos-rapidos{gap:18px}
+  .wa-flotante{display:none}
+  body{padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
+  .barra-movil{
+    position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom, 0px));z-index:60;
+    display:grid;grid-template-columns:repeat(3,1fr);padding:6px;border-radius:22px;
+    background:var(--tinta);box-shadow:0 14px 30px -12px rgba(36,18,38,.6);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s;
+  }
+  .barra-movil::before{content:"";position:absolute;inset:4px;border-radius:18px;border:1.5px dashed rgba(245,238,227,.2);pointer-events:none}
+  .barra-movil a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:54px;border-radius:16px;color:var(--lino);text-decoration:none;font-size:12.5px;font-weight:700;letter-spacing:.02em;-webkit-tap-highlight-color:transparent}
+  .barra-movil a:active{background:rgba(245,238,227,.12)}
+  .barra-movil a{position:relative}
+  .barra-movil a + a::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:rgba(245,238,227,.16)}
+  .barra-movil svg{width:22px;height:22px}
+  .barra-movil .b-wa svg{color:#25D366}
+  .barra-movil.oculta{transform:translateY(calc(100% + 20px));opacity:0;pointer-events:none}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -561,7 +583,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 
       <article class="tarjeta t-hombre aparece d1">
         <div class="fila">
-          <div><h3>Moda hombre</h3><p>Ropa y complementos para caballero, y ropa interior de buena calidad para todos los días.</p></div>
+          <div><h3>Moda hombre</h3><p>Ropa, complementos y ropa interior para el día a día.</p></div>
           <svg class="icono" viewBox="0 0 80 80" fill="none" stroke="#241226" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M28 10 L 40 18 L 52 10 L 70 20 L 64 34 L 58 31 L 58 70 L 22 70 L 22 31 L 16 34 L 10 20 Z" fill="#DCE5D6"/>
             <path d="M28 10 L 36 24 L 40 18 L 44 24 L 52 10"/>
@@ -796,6 +818,22 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
 </a>
 
+<!-- Barra de contacto fija en móvil (≤640px). Sustituye al botón verde suelto. -->
+<nav class="barra-movil" id="barra-movil" aria-label="Contacto rápido">
+  <a href="tel:+34690703862">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+    Llamar
+  </a>
+  <a class="b-wa" href="https://wa.me/34690703862" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+    WhatsApp
+  </a>
+  <a href="https://www.google.com/maps/search/?api=1&amp;query=37.66462,-1.70387" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Cómo llegar
+  </a>
+</nav>
+
 <!-- ================= MODALES LEGALES ================= -->
 <!-- EDITAR: sustituir los textos .pendiente por titular, NIF y email reales y revisar con asesoría -->
 <dialog id="modal-aviso"><div class="modal-dentro">
@@ -900,16 +938,30 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   /* ---- Hilo que se cose con el scroll ---- */
   var svg = document.querySelector('.hilo'), guia = svg.querySelector('.guia'), cosido = svg.querySelector('.cosido'), aguja = svg.querySelector('.aguja'), largo = 0;
   function trazaHilo(){
-    var W = document.documentElement.clientWidth, H = document.documentElement.scrollHeight;
+    svg.style.height = '0'; // que el propio hilo no infle la altura al medir (p. ej. al girar el móvil)
+    var W = document.documentElement.clientWidth, H = document.documentElement.scrollHeight, movil = W < 700, d;
     svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox','0 0 '+W+' '+H);
     svg.style.height = H + 'px';
-    var izq = W < 700 ? 8 : Math.max(16, (W - 1180)/2 - 20), der = W - izq;
-    var inicio = Math.min(H*0.06, 520), paso = Math.max(700, H/8), d = 'M ' + (W*0.78) + ' ' + inicio, y = inicio, lado = 0;
-    while (y < H - 200){
-      var ny = Math.min(y + paso, H - 200), x = lado ? der : izq, cx = lado ? izq : der;
-      d += ' C ' + cx + ' ' + (y + paso*0.35) + ', ' + x + ' ' + (ny - paso*0.55) + ', ' + x + ' ' + ny;
-      y = ny; lado = 1 - lado;
+    if (movil){
+      // Móvil: pespunte fino y casi recto pegado al borde izquierdo, fuera del texto
+      var x0 = 6, onda = 7, tramo = 90, ym = 100, fin = H - 120, lm = 0;
+      d = 'M ' + x0 + ' ' + ym;
+      while (ym < fin){
+        var nym = Math.min(ym + tramo, fin);
+        d += ' Q ' + (x0 + (lm ? -onda : onda)) + ' ' + ((ym + nym)/2) + ', ' + x0 + ' ' + nym;
+        ym = nym; lm = 1 - lm;
+      }
+    } else {
+      var izq = Math.max(16, (W - 1180)/2 - 20), der = W - izq;
+      var inicio = Math.min(H*0.06, 520), paso = Math.max(700, H/8), y = inicio, lado = 0;
+      d = 'M ' + (W*0.78) + ' ' + inicio;
+      while (y < H - 200){
+        var ny = Math.min(y + paso, H - 200), x = lado ? der : izq, cx = lado ? izq : der;
+        d += ' C ' + cx + ' ' + (y + paso*0.35) + ', ' + x + ' ' + (ny - paso*0.55) + ', ' + x + ' ' + ny;
+        y = ny; lado = 1 - lado;
+      }
     }
+    aguja.setAttribute('r', movil ? 3 : 4);
     guia.setAttribute('d', d); cosido.setAttribute('d', d);
     largo = cosido.getTotalLength();
     cosido.style.strokeDasharray = largo;
@@ -942,6 +994,10 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 
   /* ---- Formulario → WhatsApp ---- */
   var form = document.getElementById('formulario'), err = document.getElementById('error');
+  var barra = document.getElementById('barra-movil');
+  function escribe(el){ return el.matches('textarea, input:not([type]), input[type=text]'); }
+  form.addEventListener('focusin', function(e){ if (escribe(e.target)) barra.classList.add('oculta'); });
+  form.addEventListener('focusout', function(e){ if (escribe(e.target)) barra.classList.remove('oculta'); });
   form.addEventListener('submit', function(e){
     e.preventDefault(); err.textContent = '';
     if (form.web.value) return; // trampa antispam

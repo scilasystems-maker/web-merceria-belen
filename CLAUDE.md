@@ -56,6 +56,7 @@ No tienen fuente. No volver a ponerlos sin confirmación:
 - `priceRange: "€€"` del JSON-LD.
 - «Aquí te conocen, te escuchan y, si no lo tenemos, te decimos dónde encontrarlo» (párrafo de Por qué Belén). Queda solo «Formamos parte del Área Comercial de La Viña.».
 - «de señora y caballero» en la tarjeta de lencería (queda «Sujetadores, braguitas y ropa interior.»).
+- «para caballero» y «de buena calidad» en la tarjeta de moda hombre (queda «Ropa, complementos y ropa interior para el día a día.»).
 
 ## Pendientes `<!-- EDITAR -->` en index.html
 
@@ -99,8 +100,8 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 
 | # | Sección | id / clase | Contenido |
 |---|---|---|---|
-| — | Cabecera fija tipo píldora | `#cabecera` | Logo botón + menú + botón llamar + hamburguesa |
-| — | Hilo cosido | `.hilo` | SVG que se «cose» al hacer scroll (oculto < 700px) |
+| — | Cabecera fija tipo píldora | `#cabecera` | Logo botón + menú + botón llamar (oculto ≤ 640px) + hamburguesa |
+| — | Hilo cosido | `.hilo` | SVG que se «cose» al hacer scroll. Escritorio: zigzag de lado a lado. < 700px: pespunte fino pegado al borde izquierdo (x 2–10px), fuera del texto |
 | — | Portada | `#inicio` | H1 «Del botón al conjunto perfecto», estado abierto/cerrado, escena ilustrada con parallax |
 | — | Cinta métrica | `.cinta` | Marquesina con las categorías |
 | 01 | La tienda | `#tienda` | Bento: Mercería, Lencería y corsetería, Bebé y niño, Moda mujer, Moda hombre |
@@ -110,7 +111,8 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 | 05 | Pregúntanos | `#pregunta` | Formulario que abre WhatsApp con el mensaje (no guarda datos) |
 | 06 | Preguntas frecuentes | `#faq` | `<details>` |
 | — | Pie | `.pie` | Lema grande, datos, enlaces legales, créditos ScilaAI |
-| — | WhatsApp flotante | `#wa-flotante` | |
+| — | WhatsApp flotante | `#wa-flotante` | Solo > 640px |
+| — | Barra de contacto móvil | `#barra-movil` | Solo ≤ 640px: Llamar / WhatsApp / Cómo llegar, fija abajo. `body` lleva `padding-bottom` para que no tape el pie |
 | — | Modales legales | `dialog#modal-*` | Aviso legal, privacidad, cookies |
 
 ## JavaScript (en línea, al final)
@@ -119,7 +121,8 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - Menú móvil.
 - Abierto/cerrado con hora de Madrid: objeto `HORARIO` en minutos (si cambia el horario, cambiarlo aquí, en la lista `#horario`, en el FAQ y en el JSON-LD).
 - Aparición al hacer scroll (`.aparece` + IntersectionObserver).
-- Hilo que se cose con el scroll.
+- Hilo que se cose con el scroll (dos trazados: escritorio y móvil < 700px; se recalcula al redimensionar o girar).
+- La barra móvil se oculta (`.oculta`) mientras se escribe en el formulario, para que no tape el campo con el teclado abierto.
 - Parallax de la escena con el ratón.
 - Formulario → `wa.me` con texto prellenado, trampa antispam `.trampa`.
 - Modales legales con `<dialog>`.
@@ -128,3 +131,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 ## Sin cookies
 
 No hay analítica ni mapas embebidos. Solo Google Fonts como recurso de terceros (está declarado en la política de cookies). Si se añade algo de terceros, actualizar la política.
+
+## Pruebas
+
+Antes de publicar cambios de maquetación, revisar a 390px (móvil) y 1280px (escritorio): sin scroll horizontal, la barra móvil no tapa el formulario ni el pie, y sin errores de JS.
