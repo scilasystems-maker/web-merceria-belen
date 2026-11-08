@@ -102,7 +102,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 |---|---|---|---|
 | — | Cabecera fija tipo píldora | `#cabecera` | Logo botón + menú + botón llamar (oculto ≤ 640px) + hamburguesa |
 | — | Hilo cosido | `.hilo` | SVG que se «cose» al hacer scroll. Escritorio: zigzag de lado a lado. < 700px: pespunte fino pegado al borde izquierdo (x 2–10px), fuera del texto |
-| — | Portada | `#inicio` | H1 «Del botón al conjunto perfecto», estado abierto/cerrado, escena ilustrada con parallax |
+| — | Portada | `#inicio` | H1 «Del botón al conjunto perfecto» (se cose al cargar), estado abierto/cerrado, escena ilustrada con parallax, botón principal con pespunte |
 | — | Cinta métrica | `.cinta` | Marquesina con las categorías |
 | 01 | La tienda | `#tienda` | Bento: Mercería, Lencería y corsetería, Bebé y niño, Moda mujer, Moda hombre |
 | 02 | Tallas grandes | `#tallas` | Bloque coral con cintas métricas |
@@ -128,6 +128,22 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - Formulario → `wa.me` con texto prellenado, trampa antispam `.trampa`.
 - Modales legales con `<dialog>`.
 - Respeta `prefers-reduced-motion`.
+
+## Animación de la portada
+
+Una sola vez al cargar, ~2,3 s en escritorio y ~1,5 s en móvil. No se repite.
+
+1. **Título cosido**: el H1 está partido en tres `.linea`. Una aguja (`.aguja-titulo`, creada por JS) recorre cada línea mientras se destapa con `clip-path` y deja un pespunte coral (`.puntada`) que luego se desvanece. Al terminar la línea de «conjunto» se dibuja el subrayado mostaza.
+2. **Hilo del carrete al botón** (solo escritorio, con el carrete a la derecha y el botón visible en pantalla): un SVG temporal (`.hilo-portada`) sale del extremo del hilo del carrete, pasa por el hueco entre el texto y los botones y llega por arriba al botón «¿Lo tenéis? Pregunta». Luego se desvanece y se borra.
+3. **Pespunte del botón** (`.boton-cosido::after`): un contorno discontinuo coral se «cose» alrededor del botón principal y **se queda**. En móvil es lo único que hace el botón. Si el botón no se ve al cargar, se cose cuando aparece en pantalla.
+
+Detalles:
+
+- `<html class="anima-portada">` se pone en el `<head>` antes de pintar, solo si el usuario **no** tiene `prefers-reduced-motion`. Sin esa clase todo se ve quieto y completo (título visible, pespunte del botón ya dibujado).
+- Si el JS fallara, a los 5 s el CSS muestra el título y el pespunte igualmente.
+- Espera a la tipografía (máx. 700 ms) para medir bien las líneas.
+- En pantallas bajas (p. ej. 1280×800) el título encoge un poco (`min(8.2vw, 12svh)`) y el margen superior de la portada baja, para que el botón principal se vea sin hacer scroll.
+- Si se cambia el texto del H1, mantener una `<span class="linea">` por línea.
 
 ## Cómo añadir festivos y vacaciones
 

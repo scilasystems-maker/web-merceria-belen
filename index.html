@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercería Belén · Mercería, lencería y moda en La Viña, Lorca</title>
+<script>/* Animación de portada solo si el usuario no ha pedido reducir movimiento */
+if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('anima-portada');</script>
 <meta name="description" content="Mercería Belén, en el barrio de La Viña (Lorca): mercería, lencería, moda de mujer y hombre, especialistas en tallas grandes de mujer y ropa de bebé y niño. Ctra. de Granada, 19. Tel. 690 70 38 62.">
 <!-- EDITAR: demo en GitHub Pages. Con dominio propio: volver a "index, follow" y añadir canonical y og:url -->
 <meta name="robots" content="noindex, nofollow">
@@ -141,18 +143,45 @@ a{color:inherit}
 @keyframes latido{from{transform:scale(.6);opacity:1}to{transform:scale(1.6);opacity:0}}
 
 /* ---------- Portada ---------- */
-.portada{position:relative;padding:150px 0 70px;min-height:100svh;display:flex;align-items:center}
+.portada{position:relative;padding:150px 0 70px;padding-top:clamp(110px, 15svh, 150px);min-height:100svh;display:flex;align-items:center}
 .portada .envoltura{display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center}
-.antetitulo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:26px}
+.antetitulo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:22px}
 .etiqueta{font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--coral-osc)}
 h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.025em;line-height:1.02;font-variation-settings:"SOFT" 100}
-h1{font-size:clamp(52px, 8.2vw, 112px);font-weight:450}
+h1{font-size:clamp(52px, 8.2vw, 112px);font-size:clamp(52px, min(8.2vw, 12svh), 112px);font-weight:450} /* en pantallas bajas encoge para que el botón principal se vea sin bajar */
 h1 em, h2 em{font-style:italic;font-weight:400;color:var(--coral)}
 h1 .subrayado{position:relative;display:inline-block}
 h1 .subrayado svg{position:absolute;left:-2%;bottom:-.08em;width:104%;height:.32em;overflow:visible}
 h1 .subrayado path{fill:none;stroke:var(--mostaza);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:trazo 1.4s .9s cubic-bezier(.6,0,.2,1) forwards}
 @keyframes trazo{to{stroke-dashoffset:0}}
-.entradilla{font-size:clamp(18px,1.6vw,21px);color:var(--tinta-2);max-width:33ch;margin:28px 0 36px}
+
+/* título que se cose al cargar (lo dirige el JS; si el JS falla, a los 5 s se muestra igual) */
+.titulo-cosido{position:relative}
+.titulo-cosido .linea{display:block;width:fit-content;position:relative;padding:.14em .14em .3em 0;margin:-.14em -.14em -.3em 0}
+.anima-portada .titulo-cosido .linea{clip-path:inset(0 100% 0 0);animation:destapa 0s 5s forwards}
+.anima-portada .titulo-cosido .subrayado path{animation:trazo .6s 5s cubic-bezier(.6,0,.2,1) forwards}
+.titulo-cosido.subraya .subrayado path{animation:trazo .6s cubic-bezier(.6,0,.2,1) forwards}
+.titulo-cosido.cosido-fin .linea{clip-path:none;animation:none}
+@keyframes destapa{to{clip-path:none}}
+.puntada{position:absolute;left:0;right:.14em;bottom:.2em;height:max(2px,.03em);pointer-events:none;
+  background:repeating-linear-gradient(90deg,var(--coral) 0 .14em,transparent .14em .25em)}
+.aguja-titulo{position:absolute;left:0;top:0;width:.62em;height:.62em;pointer-events:none;z-index:2}
+.aguja-titulo svg{width:100%;height:100%;overflow:visible}
+
+/* hilo del carrete al botón principal */
+.hilo-portada{position:absolute;left:0;top:0;pointer-events:none;z-index:3;overflow:visible}
+.hilo-portada path{fill:none;stroke:var(--coral);stroke-width:2.4;stroke-linecap:round}
+@property --cosido{syntax:'<angle>';inherits:false;initial-value:360deg}
+.boton-cosido{position:relative}
+.boton-cosido::after{
+  content:"";position:absolute;inset:-6px;border-radius:999px;border:1.5px dashed var(--coral);pointer-events:none;
+  -webkit-mask:conic-gradient(from var(--desde,90deg),#000 var(--cosido),transparent 0);mask:conic-gradient(from var(--desde,90deg),#000 var(--cosido),transparent 0)
+}
+.anima-portada .boton-cosido::after{--cosido:0deg;animation:cose-boton 0s 5s forwards}
+.anima-portada .boton-cosido.cosiendo::after{animation:cose-boton .55s cubic-bezier(.5,0,.3,1) forwards}
+.boton-cosido.cosido::after{--cosido:360deg;animation:none}
+@keyframes cose-boton{to{--cosido:360deg}}
+.entradilla{font-size:clamp(18px,1.6vw,21px);color:var(--tinta-2);max-width:33ch;margin:24px 0 30px}
 .entradilla strong{color:var(--tinta)}
 .acciones{display:flex;flex-wrap:wrap;gap:12px}
 .datos-rapidos{display:flex;flex-wrap:wrap;gap:26px;margin-top:44px;padding-top:26px;border-top:1.5px dashed rgba(36,18,38,.2)}
@@ -417,6 +446,8 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .aparece{opacity:1;transform:none}
   h1 .subrayado path{stroke-dashoffset:0}
+  .titulo-cosido .linea{clip-path:none!important}
+  .boton-cosido::after{--cosido:360deg!important}
 }
 </style>
 </head>
@@ -460,10 +491,10 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
         <span class="etiqueta">Mercería · Lencería · Moda</span>
         <span class="estado" data-estado><i></i><span>Consultando horario…</span></span>
       </div>
-      <h1 class="aparece d1">Del botón<br>al <span class="subrayado"><em>conjunto</em><svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 20 C 60 6, 120 26, 180 14 S 270 8, 296 18"/></svg></span><br>perfecto.</h1>
+      <h1 class="titulo-cosido"><span class="linea">Del botón</span> <span class="linea">al <span class="subrayado"><em>conjunto</em><svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 20 C 60 6, 120 26, 180 14 S 270 8, 296 18"/></svg></span></span> <span class="linea">perfecto.</span></h1>
       <p class="entradilla aparece d2">Tu mercería de toda la vida en el barrio de <strong>La Viña</strong>: hilos, botones y lencería, moda para mujer y hombre, <strong>tallas grandes</strong> y ropita para los más peques. Con el trato cercano de siempre.</p>
       <div class="acciones aparece d3">
-        <a class="boton boton-coral" href="#pregunta">
+        <a class="boton boton-coral boton-cosido" href="#pregunta">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
           ¿Lo tenéis? Pregunta
         </a>
@@ -974,6 +1005,85 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
     });
   }
   pintaEstado(); setInterval(pintaEstado, 60000);
+
+  /* ---- Portada: el título se cose y el hilo del carrete llega al botón (una sola vez, ~2,5 s) ---- */
+  (function(){
+    var raiz = document.documentElement, h1 = document.querySelector('.titulo-cosido'), boton = document.querySelector('.boton-cosido');
+    if (!h1 || !boton) return;
+    if (!raiz.classList.contains('anima-portada') || !Element.prototype.animate){
+      raiz.classList.remove('anima-portada'); return;
+    }
+    var portada = document.getElementById('inicio'), carrete = document.querySelector('#escena .carrete');
+    var lineas = h1.querySelectorAll('.linea'), empezado = false;
+    var AGUJA = '<svg viewBox="0 0 60 60" fill="none"><path d="M47 13 C 57 22, 59 36, 49 42" stroke="#E0485A" stroke-width="1.6" stroke-linecap="round"/><path d="M4 56 L52 8" stroke="#8C9298" stroke-width="3.4" stroke-linecap="round"/><path d="M4 56 L52 8" stroke="#D7DBDF" stroke-width="1" stroke-linecap="round" transform="translate(-.8 -.8)"/><ellipse cx="47" cy="13" rx="4.2" ry="1.5" transform="rotate(-45 47 13)" fill="#F5EEE3" stroke="#6E747A" stroke-width=".9"/></svg>';
+
+    function coseBoton(){
+      function cose(){
+        boton.classList.add('cosiendo');
+        setTimeout(function(){ boton.classList.remove('cosiendo'); boton.classList.add('cosido'); }, 600);
+      }
+      var r = boton.getBoundingClientRect();
+      if (r.top >= 0 && r.bottom <= innerHeight) return cose();
+      if (!('IntersectionObserver' in window)) return cose();
+      // si el botón no se ve al cargar, se cose cuando aparece
+      var io2 = new IntersectionObserver(function(e){ if (e[0].isIntersecting){ io2.disconnect(); cose(); } }, {threshold:1});
+      io2.observe(boton);
+    }
+
+    function hiloAlBoton(){
+      var pr = portada.getBoundingClientRect(), br = boton.getBoundingClientRect(), cr = carrete ? carrete.getBoundingClientRect() : null;
+      // Solo en escritorio (carrete a la derecha del botón) y si todo se ve en pantalla; en móvil, solo el pespunte del botón
+      if (!cr || cr.left < br.right || br.bottom > innerHeight || cr.bottom > innerHeight) return coseBoton();
+      var sx = cr.left + cr.width*170/200 - pr.left, sy = cr.top + cr.height*236/240 - pr.top;
+      // llega por arriba a la esquina derecha del botón, por el hueco entre el texto y los botones (sin cruzar «Cómo llegar»)
+      var ex = br.right - br.height/2 - pr.left, ey = br.top - 6 - pr.top;
+      var ang = Math.atan2(br.width/2 - br.height/2, br.height/2 + 6) * 180 / Math.PI;
+      boton.style.setProperty('--desde', ang.toFixed(1) + 'deg'); // el pespunte empieza donde llega el hilo
+      var ns = 'http://www.w3.org/2000/svg', svgH = document.createElementNS(ns, 'svg'), path = document.createElementNS(ns, 'path');
+      svgH.setAttribute('class', 'hilo-portada'); svgH.setAttribute('aria-hidden', 'true');
+      svgH.setAttribute('width', pr.width); svgH.setAttribute('height', pr.height);
+      path.setAttribute('d', 'M' + sx + ' ' + sy + ' C ' + (sx - 10) + ' ' + (ey - 4) + ', ' + (ex + 200) + ' ' + (ey - 4) + ', ' + ex + ' ' + ey);
+      svgH.appendChild(path); portada.appendChild(svgH);
+      var largo = path.getTotalLength();
+      path.style.strokeDasharray = largo;
+      path.animate([{strokeDashoffset: largo}, {strokeDashoffset: 0}], {duration: 700, easing: 'cubic-bezier(.55,0,.35,1)', fill: 'forwards'}).onfinish = function(){
+        coseBoton();
+        svgH.animate([{opacity: 1}, {opacity: 0}], {duration: 400, delay: 250, fill: 'forwards'}).onfinish = function(){ svgH.remove(); };
+      };
+    }
+
+    function empieza(){
+      if (empezado) return; empezado = true;
+      var INICIO = 150, TOTAL = 1250;
+      var fs = parseFloat(getComputedStyle(h1).fontSize), hr = h1.getBoundingClientRect(), tam = fs*.62;
+      var datos = [], suma = 0;
+      lineas.forEach(function(l){ var r = l.getBoundingClientRect(); datos.push({x: r.left - hr.left, y: r.bottom - hr.top - fs*.2, w: r.width}); suma += r.width; });
+      var aguja = document.createElement('span'); aguja.className = 'aguja-titulo'; aguja.setAttribute('aria-hidden', 'true'); aguja.innerHTML = AGUJA;
+      h1.appendChild(aguja);
+      function pos(x, y){ return 'translate(' + (x - tam*.06) + 'px,' + (y - tam*.94) + 'px)'; }
+      var kf = [], t = 0, anims = [], puntadas = [];
+      lineas.forEach(function(l, i){
+        var d = datos[i], dur = TOTAL * d.w / suma;
+        var p = document.createElement('span'); p.className = 'puntada'; p.setAttribute('aria-hidden', 'true'); l.appendChild(p); puntadas.push(p);
+        anims.push(l.animate([{clipPath: 'inset(0 100% 0 0)'}, {clipPath: 'inset(0 0% 0 0)'}], {duration: dur, delay: INICIO + t, easing: 'linear', fill: 'both'}));
+        if (l.querySelector('.subrayado')) setTimeout(function(){ h1.classList.add('subraya'); }, INICIO + t + dur);
+        kf.push({offset: t/TOTAL, transform: pos(d.x, d.y)});
+        t += dur;
+        kf.push({offset: Math.min(1, t/TOTAL), transform: pos(d.x + d.w, d.y)});
+      });
+      aguja.animate(kf, {duration: TOTAL, delay: INICIO, fill: 'both'});
+      aguja.animate([{opacity: 0}, {opacity: 1, offset: .06}, {opacity: 1, offset: .92}, {opacity: 0}], {duration: TOTAL + 150, delay: INICIO, fill: 'both'}).onfinish = function(){ aguja.remove(); };
+      anims[anims.length - 1].onfinish = function(){
+        h1.classList.add('cosido-fin', 'subraya'); anims.forEach(function(a){ a.cancel(); });
+        puntadas.forEach(function(p){ p.animate([{opacity: 1}, {opacity: 0}], {duration: 450, delay: 200, fill: 'forwards'}).onfinish = function(){ p.remove(); }; });
+      };
+      // el hilo sale cuando el carrete y el botón ya han terminado de aparecer
+      setTimeout(hiloAlBoton, 900);
+    }
+    // Esperar a la tipografía para medir bien las líneas (como mucho 700 ms)
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(empieza);
+    setTimeout(empieza, 700);
+  })();
 
   /* ---- Aparición al hacer scroll ---- */
   var piezas = document.querySelectorAll('.aparece');
