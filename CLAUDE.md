@@ -38,6 +38,7 @@ Web de **Mercería Belén**, mercería de barrio en La Viña (Lorca, Murcia). Cl
 - Email `belenpadilla39@gmail.com` (pie de página).
 - Coordenadas 37.66462, -1.70387 (JSON-LD y enlace a Google Maps).
 - Nombre «Mercería Lencería Belén» (`alternateName` del JSON-LD).
+- Texto del bloque de tallas grandes: «Somos especialistas en tallas grandes de mujer. Prendas selectas de las principales marcas, con excelente calidad, y un trato cercano para ayudarte a elegir. Ven a probártelas o pregúntanos antes por tu talla.» («prendas selectas», «principales marcas», «excelente calidad» y «trato cercano» salen de la ficha).
 
 ## Pendientes de confirmar con la clienta
 
@@ -58,6 +59,7 @@ No tienen fuente. No volver a ponerlos sin confirmación:
 - «Aquí te conocen, te escuchan y, si no lo tenemos, te decimos dónde encontrarlo» (párrafo de Por qué Belén). Queda solo «Formamos parte del Área Comercial de La Viña.».
 - «de señora y caballero» en la tarjeta de lencería (queda «Sujetadores, braguitas y ropa interior.»).
 - «para caballero» y «de buena calidad» en la tarjeta de moda hombre (queda «Ropa, complementos y ropa interior para el día a día.»).
+- Texto anterior del bloque de tallas grandes: «Prendas con buen patrón, tejidos agradables y estilo actual, para que elegir sea por gusto y no por lo que queda en la percha. Ven, pruébate y te asesoramos con calma.» (sustituido por el de la ficha discoverinmurcia).
 
 ## Pendientes `<!-- EDITAR -->` en index.html
 
@@ -67,6 +69,7 @@ No tienen fuente. No volver a ponerlos sin confirmación:
 4. Confirmar que el 690 70 38 62 tiene WhatsApp — antes del formulario.
 5. Confirmar email y redes sociales — pie de página.
 6. Sustituir los textos `.pendiente` de los modales legales por titular, NIF y email reales, revisar con asesoría y actualizar «Última actualización».
+7. Foto real de prendas de tallas grandes — bloque Tallas grandes (ver «Bloque de tallas grandes»).
 
 ## Identidad visual
 
@@ -110,7 +113,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 | — | Portada | `#inicio` | H1 «Del botón al conjunto perfecto» (se cose al cargar), estado abierto/cerrado, escena ilustrada con parallax, botón principal con pespunte |
 | — | Cinta métrica | `.cinta` | Marquesina con las categorías |
 | 01 | La tienda | `#tienda` | Bento: Mercería, Lencería y corsetería, Bebé y niño, Moda mujer, Moda hombre |
-| 02 | Tallas grandes | `#tallas` | Bloque coral con cintas métricas |
+| 02 | Tallas grandes | `#tallas` | Bloque coral con dos cintas métricas que se desenrollan con el scroll + hueco para foto |
 | 03 | Por qué Belén | `#porque` | 4 motivos |
 | 04 | Visítanos | `#visitanos` | Horario (resalta hoy) + mapa ilustrado + Google Maps |
 | 05 | Pregúntanos | `#pregunta` | Formulario que abre WhatsApp con el mensaje (no guarda datos) |
@@ -131,6 +134,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - Hilo que se cose con el scroll (dos trazados: escritorio y móvil < 700px; se recalcula al redimensionar o girar).
 - La barra móvil se oculta (`.oculta`) mientras se escribe en el formulario, para que no tape el campo con el teclado abierto.
 - Parallax de la escena con el ratón.
+- Cintas métricas de tallas grandes ligadas al scroll (variables `--p1` y `--p2` en `#metro`).
 - Formulario → `wa.me` con texto prellenado, trampa antispam `.trampa`.
 - Modales con `<dialog>` (función `abreModal`): solo uno abierto a la vez; se cierran con la X, con Esc y tocando fuera; mientras hay uno abierto la página de detrás no se desplaza. Necesitan `margin:auto` en su CSS: el reset `*{margin:0}` quita el centrado que pone el navegador. Cualquier `<dialog>` nuevo usa la misma regla.
 - Cookies: aviso, panel de configuración y consentimiento (ver «Cookies y textos legales»).
@@ -151,6 +155,24 @@ Detalles:
 - Espera a la tipografía (máx. 700 ms) para medir bien las líneas.
 - En pantallas bajas (p. ej. 1280×800) el título encoge un poco (`min(8.2vw, 12svh)`) y el margen superior de la portada baja, para que el botón principal se vea sin hacer scroll.
 - Si se cambia el texto del H1, mantener una `<span class="linea">` por línea.
+
+## Bloque de tallas grandes
+
+- **Cintas** (`#metro`, `aria-hidden`): la 1.ª (mostaza, 1–10) sale de una caja de metro; la 2.ª (papel, 11–20) se desenrolla de un rollo que gira. Los números son una cinta métrica genérica: **no son tallas** y no hay que convertirlos en rangos de tallas sin datos de la clienta.
+- **Ligadas al scroll**, también hacia atrás: el JS pone `--p1` y `--p2` (0 a 1) según dónde está la cinta en pantalla (empieza cuando asoma al 95 % de la altura y termina al 40 %). La 2.ª va un poco por detrás de la 1.ª.
+- Solo escucha el scroll mientras el bloque está cerca de la pantalla (IntersectionObserver).
+- **Sin JS o con `prefers-reduced-motion`**: las variables valen 1 y las cintas se ven extendidas y quietas.
+- La frase «Que la ropa se adapte a ti, y no al revés» ya **no** está dentro del `aria-hidden` (antes la ocultaba a lectores de pantalla).
+
+### Hueco para la foto (pendiente)
+
+En el HTML, dentro de `.tallas-visual`, hay un `<!-- EDITAR -->` con la etiqueta `<figure class="tallas-foto">` comentada. Para activarla:
+
+1. Guardar la foto en `fotos/tallas-grandes.jpg` (vertical 4:5, mínimo 800×1000 px, optimizada).
+2. Quitar el comentario dejando solo la etiqueta `figure`.
+3. Poner en `alt` una descripción real de la foto.
+
+Sale como una foto con pespunte, un poco girada, y las cintas pasan por delante de su parte de abajo, como tomando medidas. Mientras no haya foto, el bloque se ve completo sin ella. Probado con una imagen de prueba a 390 y 1280 px.
 
 ## Cómo añadir festivos y vacaciones
 
