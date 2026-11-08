@@ -940,7 +940,8 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
     return {iso:f.toISOString().slice(0,10), dia:f.getUTCDay(), d:f.getUTCDate(), m:f.getUTCMonth()};
   }
   function estado(){
-    var a = ahoraMadrid(), hoy = diaMas(a, 0), fest = motivoCierre(hoy.iso), tramos = HORARIO[hoy.dia], i, t;
+    // Un día que ya cierra siempre (domingo) se trata como un día cerrado normal aunque esté en la lista
+    var a = ahoraMadrid(), hoy = diaMas(a, 0), tramos = HORARIO[hoy.dia], fest = tramos.length ? motivoCierre(hoy.iso) : '', i, t;
     if (!fest){
       for (i=0;i<tramos.length;i++){ t=tramos[i]; if (a.min>=t[0] && a.min<t[1]) return {abierto:true, txt:'Abierto ahora · cierra a las ' + hhmm(t[1])}; }
       for (i=0;i<tramos.length;i++){ t=tramos[i]; if (a.min<t[0]) return {abierto:false, txt:'Cerrado · abrimos hoy a las ' + hhmm(t[0])}; }

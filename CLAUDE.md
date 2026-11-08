@@ -155,7 +155,7 @@ Qué hace la web:
 - **Día suelto = festivo. Periodo = vacaciones.** Si un día suelto cae dentro de un periodo, manda «festivo».
 - **Indicador** (portada y Visítanos): si hoy está en la lista, dice «Hoy cerrado por festivo» o «Hoy cerrado por vacaciones», seguido de «· abrimos mañana / el miércoles / el lunes 24 de agosto a las 10:00». El «abrimos…» se salta los festivos y vacaciones aunque caigan otro día.
 - **Tabla de horario**: cada fila es el próximo día de esa semana (hoy y los 6 siguientes). Si cae en la lista, en lugar de las horas pone «Cerrado · festivo 8 dic» o «Cerrado · vacaciones», en rosa y cursiva.
-- **Los días que ya cierran siempre (domingo) no se marcan**: en la tabla siguen diciendo solo «Cerrado». La regla es por día completo: un sábado festivo sí se marca, porque normalmente abre por la mañana.
+- **Los días que ya cierran siempre (domingo) no se marcan**: en la tabla siguen diciendo solo «Cerrado» y el indicador dice lo de un domingo normal («Cerrado · abrimos mañana…»). La regla es por día completo: un sábado festivo sí se marca, porque normalmente abre por la mañana.
 
 ## Sin cookies
 
