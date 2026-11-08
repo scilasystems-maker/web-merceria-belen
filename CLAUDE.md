@@ -86,12 +86,15 @@ Concepto: costurero / mercería de toda la vida con un acabado editorial moderno
 | `--tinta-2` | `#4A3048` | Texto secundario |
 | `--gris` | `#6E5F6B` | Texto terciario, etiquetas |
 | `--coral` | `#E0485A` | Color de marca: botones, logo, acentos, sección tallas |
-| `--coral-osc` | `#B8323F` | Hover del coral, etiquetas |
+| `--coral-osc` | `#B8323F` | Hover del coral, etiquetas y rótulos de sección («01 — La tienda»…) sobre fondo claro (5,1:1) |
+| `--coral-fuerte` | `#DC3045` | **Fondos con texto blanco**: botones coral y bloque de tallas grandes (blanco 4,6:1). Mismo tono que `--coral`, 5,4 puntos más oscuro |
+| `--mostaza-clara` | `#F3CF90` | Títulos grandes sobre `--coral-fuerte` (3,1:1) |
+| `--borde-campo` | `#9D8F9C` | Bordes de campos, opciones e interruptores (3:1 sobre blanco) |
 | `--mostaza` | `#E9A93A` | Cinta métrica, subrayados, acentos sobre fondo oscuro |
 | `--salvia` | `#8FA88A` | Botón ilustrado |
 | `--rosa` | `#F3C9C4` | Tarjeta lencería, disco de la portada |
 
-Otros fijos: `#DCE5D6` (tarjeta bebé), `#E7DCCB` (mapa), `#2FA36B` (punto «abierto»), `#25D366` (WhatsApp).
+Otros fijos: `#DCE5D6` (tarjeta bebé), `#E7DCCB` (mapa), `#2FA36B` (punto «abierto»), `#25D366` (icono de WhatsApp sobre fondo oscuro, en la barra móvil), `#1DA851` (fondo del botón flotante de WhatsApp: el icono blanco necesita 3:1; con `#25D366` daba 1,98:1).
 
 Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 
@@ -108,6 +111,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 
 | # | Sección | id / clase | Contenido |
 |---|---|---|---|
+| — | Saltar al contenido | `.saltar` | Primer elemento del `<body>`. Solo se ve al llegar con el tabulador; lleva a `<main id="contenido">` |
 | — | Cabecera fija tipo píldora | `#cabecera` | Logo botón + menú + botón llamar (oculto ≤ 640px) + hamburguesa |
 | — | Hilo cosido | `.hilo` | SVG que se «cose» al hacer scroll. Escritorio: zigzag de lado a lado. < 700px: pespunte fino pegado al borde izquierdo (x 2–10px), fuera del texto |
 | — | Portada | `#inicio` | H1 «Del botón al conjunto perfecto» (se cose al cargar), estado abierto/cerrado, escena ilustrada con parallax, botón principal con pespunte |
@@ -201,6 +205,36 @@ Qué hace la web:
 - **Indicador** (portada y Visítanos): si hoy está en la lista, dice «Hoy cerrado por festivo» o «Hoy cerrado por vacaciones», seguido de «· abrimos mañana / el miércoles / el lunes 24 de agosto a las 10:00». El «abrimos…» se salta los festivos y vacaciones aunque caigan otro día.
 - **Tabla de horario**: cada fila es el próximo día de esa semana (hoy y los 6 siguientes). Si cae en la lista, en lugar de las horas pone «Cerrado · festivo 8 dic» o «Cerrado · vacaciones», en rosa y cursiva.
 - **Los días que ya cierran siempre (domingo) no se marcan**: en la tabla siguen diciendo solo «Cerrado» y el indicador dice lo de un domingo normal («Cerrado · abrimos mañana…»). La regla es por día completo: un sábado festivo sí se marca, porque normalmente abre por la mañana.
+
+## Accesibilidad (WCAG 2.2 AA)
+
+Auditado con axe-core (0 incumplimientos A/AA y de buenas prácticas, en la página, con el aviso de cookies, con cada pop-up y con el menú móvil abierto) y revisando a mano los contrastes que axe no puede medir por la textura del fondo.
+
+**Reglas para no romperlo:**
+
+- **Contraste.** Texto normal ≥ 4,5:1 y texto grande (≥ 24 px, o ≥ 18,66 px en negrita) ≥ 3:1. Elementos gráficos y bordes de controles ≥ 3:1.
+  - Texto blanco sobre coral: siempre sobre `--coral-fuerte`, nunca sobre `--coral` (4:1, no llega).
+  - Coral sobre lino solo para títulos grandes (3,5:1). Para texto normal, `--coral-osc`.
+  - Mostaza sobre coral no llega ni en títulos: usar `--mostaza-clara`.
+  - Bordes de campos y opciones: `--borde-campo`.
+- **Foco visible**: `:focus-visible` con contorno coral de 3 px. Sobre fondo coral (bloque de tallas) el contorno es blanco. Los campos del formulario usan un doble borde coral. No quitar el `outline` sin poner otro indicador.
+- **Orden del tabulador** = orden del HTML: saltar al contenido → cabecera → portada → … → pie → WhatsApp/barra móvil. El aviso de cookies, cuando está visible, va justo después de «Saltar al contenido».
+- **El foco no se esconde** bajo la cabecera fija ni bajo la barra móvil: `scroll-padding-top:100px` y, en móvil, `scroll-padding-bottom:96px`.
+- **Menú móvil**: al abrirlo, el foco pasa al primer enlace (en el HTML los enlaces van antes que el botón). Esc lo cierra y devuelve el foco al botón.
+- **Pop-ups**: `<dialog>` modal (la página de detrás queda bloqueada). El botón de cerrar se llama «Cerrar: <título>» (lo pone el JS).
+- **Nombres**: los enlaces de teléfono se anuncian como «Llamar al 690 70 38 62». Los que abren otra pestaña o WhatsApp llevan un texto oculto `<span class="sr">(se abre en otra pestaña)</span>`. Los iconos decorativos llevan `aria-hidden="true"`.
+- **Títulos en orden**: los del pie son `h2` con aspecto de etiqueta (`.pie-cols h2`).
+- El botón flotante de WhatsApp está dentro de `<aside aria-label="WhatsApp">`, para que no quede fuera de las zonas de la página.
+
+## Icono de la pantalla de inicio (manifest)
+
+- `manifest.webmanifest`: nombre «Mercería Belén», nombre corto «M. Belén», `theme_color` `#241226` (= `<meta name="theme-color">`), `background_color` `#F5EEE3`, `display: standalone`, `start_url` y `scope` relativos (`./`) para que funcione en GitHub Pages y con dominio propio.
+- `iconos/`: mismo dibujo que el favicon (botón coral con pespunte y 4 agujeros).
+  - `icono-192.png`, `icono-512.png`: fondo transparente (`purpose: any`).
+  - `icono-maskable-192.png`, `icono-maskable-512.png`: fondo lino y el botón al 80 %, dentro de la zona segura de los iconos adaptables de Android (`purpose: maskable`).
+  - `apple-touch-icon.png` (180×180): igual que el maskable, porque iPhone no admite transparencia.
+  - `icono.svg` e `icono-con-fondo.svg`: originales para regenerar los PNG si cambia el dibujo.
+- **Sin service worker ni modo offline** (decisión explícita). Si no hay conexión, la web no abre.
 
 ## Cookies y textos legales
 
