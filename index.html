@@ -268,6 +268,7 @@ h2{font-size:clamp(40px,5.6vw,76px)}
 .horario li.hoy{color:var(--mostaza);font-weight:700}
 .horario li.hoy span:first-child::after{content:" · hoy";font-weight:500;opacity:.8}
 .horario .cerr{opacity:.55}
+.horario li.festivo span:last-child{color:var(--rosa);font-style:italic;font-weight:600}
 .nota{font-size:13.5px;opacity:.7;margin-top:16px}
 .mapa{
   position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/10;margin:4px 0 24px;
@@ -897,32 +898,79 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
     a.addEventListener('click', function(){ cab.classList.remove('menu-abierto'); ham.setAttribute('aria-expanded','false'); });
   });
 
+  /* ---- Festivos y vacaciones ----
+     Fechas en las que la tienda cierra aunque toque abrir. Formato 'AAAA-MM-DD'.
+     Un día suelto: '2026-12-08'   ·   Un periodo (ambos días incluidos): ['2027-08-09', '2027-08-21']
+     Ver instrucciones en CLAUDE.md. */
+  var FESTIVOS = [
+    // EDITAR: añadir aquí los festivos y vacaciones que confirme la clienta
+  ];
+
   /* ---- Abierto / cerrado (hora de Madrid) ---- */
   var HORARIO = { 1:[[600,810],[1020,1200]], 2:[[600,810],[1020,1200]], 3:[[600,810],[1020,1200]], 4:[[600,810],[1020,1200]], 5:[[600,810],[1020,1200]], 6:[[600,810]], 0:[] };
   var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   function hhmm(m){ var h=Math.floor(m/60), mi=m%60; return h + ':' + (mi<10?'0':'') + mi; }
+  var esFecha = /^\d{4}-\d{2}-\d{2}$/;
+  FESTIVOS = FESTIVOS.filter(function(f){
+    var ok = typeof f === 'string' ? esFecha.test(f) : (f && f.length === 2 && esFecha.test(f[0]) && esFecha.test(f[1]) && f[0] <= f[1]);
+    if (!ok && window.console) console.warn('FESTIVOS: fecha mal escrita, se ignora:', f);
+    return ok;
+  });
+  // Motivo de cierre de una fecha: 'festivo' (día suelto), 'vacaciones' (periodo) o '' si abre normal
+  function motivoCierre(iso){
+    var m = '';
+    FESTIVOS.forEach(function(f){
+      if (typeof f === 'string'){ if (f === iso) m = 'festivo'; }
+      else if (!m && iso >= f[0] && iso <= f[1]) m = 'vacaciones';
+    });
+    return m;
+  }
   function ahoraMadrid(){
+    var n = new Date();
     try{
-      var p = new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+      var p = new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(n);
       var o={}; p.forEach(function(x){o[x.type]=x.value;});
-      var d = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[o.weekday];
-      return {dia:d, min:(parseInt(o.hour,10)%24)*60 + parseInt(o.minute,10)};
-    }catch(e){ var n=new Date(); return {dia:n.getDay(), min:n.getHours()*60+n.getMinutes()}; }
+      return {base:Date.UTC(+o.year, +o.month-1, +o.day), min:(parseInt(o.hour,10)%24)*60 + parseInt(o.minute,10)};
+    }catch(e){ return {base:Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()), min:n.getHours()*60+n.getMinutes()}; }
+  }
+  // Fecha de Madrid dentro de k días (k = 0 es hoy)
+  function diaMas(a, k){
+    var f = new Date(a.base + k*864e5);
+    return {iso:f.toISOString().slice(0,10), dia:f.getUTCDay(), d:f.getUTCDate(), m:f.getUTCMonth()};
   }
   function estado(){
-    var a = ahoraMadrid(), tramos = HORARIO[a.dia], i, t;
-    for (i=0;i<tramos.length;i++){ t=tramos[i]; if (a.min>=t[0] && a.min<t[1]) return {abierto:true, txt:'Abierto ahora · cierra a las ' + hhmm(t[1])}; }
-    for (i=0;i<tramos.length;i++){ t=tramos[i]; if (a.min<t[0]) return {abierto:false, txt:'Cerrado · abrimos hoy a las ' + hhmm(t[0])}; }
-    for (var k=1;k<=7;k++){ var d=(a.dia+k)%7; if (HORARIO[d].length){ return {abierto:false, txt:'Cerrado · abrimos ' + (k===1?'mañana':'el ' + DIAS[d]) + ' a las ' + hhmm(HORARIO[d][0][0])}; } }
-    return {abierto:false, txt:'Cerrado'};
+    var a = ahoraMadrid(), hoy = diaMas(a, 0), fest = motivoCierre(hoy.iso), tramos = HORARIO[hoy.dia], i, t;
+    if (!fest){
+      for (i=0;i<tramos.length;i++){ t=tramos[i]; if (a.min>=t[0] && a.min<t[1]) return {abierto:true, txt:'Abierto ahora · cierra a las ' + hhmm(t[1])}; }
+      for (i=0;i<tramos.length;i++){ t=tramos[i]; if (a.min<t[0]) return {abierto:false, txt:'Cerrado · abrimos hoy a las ' + hhmm(t[0])}; }
+    }
+    var pre = fest ? 'Hoy cerrado por ' + fest : 'Cerrado';
+    for (var k=1;k<=400;k++){
+      var f = diaMas(a, k);
+      if (HORARIO[f.dia].length && !motivoCierre(f.iso)){
+        var cuando = k===1 ? 'mañana' : k<7 ? 'el ' + DIAS[f.dia] : 'el ' + DIAS[f.dia] + ' ' + f.d + ' de ' + MESES[f.m];
+        return {abierto:false, txt:pre + ' · abrimos ' + cuando + ' a las ' + hhmm(HORARIO[f.dia][0][0])};
+      }
+    }
+    return {abierto:false, txt:pre};
   }
   function pintaEstado(){
-    var e = estado(), hoy = ahoraMadrid().dia;
+    var e = estado(), a = ahoraMadrid(), hoy = diaMas(a, 0).dia;
     document.querySelectorAll('[data-estado]').forEach(function(el){
       el.classList.toggle('abierto', e.abierto); el.classList.toggle('cerrado', !e.abierto);
       el.querySelector('span').textContent = e.txt;
     });
-    document.querySelectorAll('#horario li').forEach(function(li){ li.classList.toggle('hoy', +li.getAttribute('data-dia') === hoy); });
+    // Tabla: cada fila es el próximo día de esa semana (hoy y los 6 siguientes)
+    document.querySelectorAll('#horario li').forEach(function(li){
+      // Los días que ya cierran siempre (domingo) no se marcan: siguen diciendo solo «Cerrado»
+      var ds = +li.getAttribute('data-dia'), f = diaMas(a, (ds - hoy + 7) % 7), horas = li.children[1];
+      var fest = HORARIO[ds].length ? motivoCierre(f.iso) : '';
+      if (!horas.hasAttribute('data-horas')) horas.setAttribute('data-horas', horas.textContent);
+      li.classList.toggle('hoy', ds === hoy);
+      li.classList.toggle('festivo', !!fest);
+      horas.textContent = !fest ? horas.getAttribute('data-horas') : fest === 'vacaciones' ? 'Cerrado · vacaciones' : 'Cerrado · festivo ' + f.d + ' ' + MESES[f.m].slice(0,3);
+    });
   }
   pintaEstado(); setInterval(pintaEstado, 60000);
 

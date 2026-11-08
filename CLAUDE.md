@@ -120,6 +120,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - Año automático en el pie.
 - Menú móvil.
 - Abierto/cerrado con hora de Madrid: objeto `HORARIO` en minutos (si cambia el horario, cambiarlo aquí, en la lista `#horario`, en el FAQ y en el JSON-LD).
+- Festivos y vacaciones: lista `FESTIVOS` (ver «Cómo añadir festivos y vacaciones»). Si hoy está en la lista, el indicador dice «Hoy cerrado por festivo / por vacaciones · abrimos …» y la tabla marca esa fila.
 - Aparición al hacer scroll (`.aparece` + IntersectionObserver).
 - Hilo que se cose con el scroll (dos trazados: escritorio y móvil < 700px; se recalcula al redimensionar o girar).
 - La barra móvil se oculta (`.oculta`) mientras se escribe en el formulario, para que no tape el campo con el teclado abierto.
@@ -127,6 +128,34 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - Formulario → `wa.me` con texto prellenado, trampa antispam `.trampa`.
 - Modales legales con `<dialog>`.
 - Respeta `prefers-reduced-motion`.
+
+## Cómo añadir festivos y vacaciones
+
+La lista está en `index.html`, en el `<script>` del final. Buscar `var FESTIVOS`. **Hoy está vacía**: solo se añaden fechas que confirme la clienta.
+
+```js
+var FESTIVOS = [
+  // EDITAR: añadir aquí los festivos y vacaciones que confirme la clienta
+  '2026-12-08',                  // un día suelto
+  '2026-12-25',
+  ['2027-08-09', '2027-08-21'],  // un periodo: del 9 al 21 de agosto, los dos incluidos
+];
+```
+
+Reglas:
+
+- Formato siempre `'AAAA-MM-DD'`, entre comillas simples y con coma al final de cada línea.
+- Día suelto → la fecha. Periodo (vacaciones) → `['inicio', 'fin']`, ambos días incluidos.
+- Una fecha mal escrita se ignora (sale un aviso en la consola del navegador) y no rompe la web.
+- Las fechas pasadas no molestan, pero conviene limpiar la lista de vez en cuando.
+- Se usa la fecha de Madrid, esté donde esté quien visita la web.
+
+Qué hace la web:
+
+- **Día suelto = festivo. Periodo = vacaciones.** Si un día suelto cae dentro de un periodo, manda «festivo».
+- **Indicador** (portada y Visítanos): si hoy está en la lista, dice «Hoy cerrado por festivo» o «Hoy cerrado por vacaciones», seguido de «· abrimos mañana / el miércoles / el lunes 24 de agosto a las 10:00». El «abrimos…» se salta los festivos y vacaciones aunque caigan otro día.
+- **Tabla de horario**: cada fila es el próximo día de esa semana (hoy y los 6 siguientes). Si cae en la lista, en lugar de las horas pone «Cerrado · festivo 8 dic» o «Cerrado · vacaciones», en rosa y cursiva.
+- **Los días que ya cierran siempre (domingo) no se marcan**: en la tabla siguen diciendo solo «Cerrado». La regla es por día completo: un sábado festivo sí se marca, porque normalmente abre por la mañana.
 
 ## Sin cookies
 
