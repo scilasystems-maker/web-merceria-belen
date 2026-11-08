@@ -4,7 +4,8 @@ Web de **Mercería Belén**, mercería de barrio en La Viña (Lorca, Murcia). Cl
 
 - Repo: `scilasystems-maker/web-merceria-belen` (rama `main`)
 - Publicada con GitHub Pages: https://scilasystems-maker.github.io/web-merceria-belen/
-- Todo lo que hay en el repo se publica: cualquier archivo que se suba (incluido este) es accesible por URL.
+- Todo lo que hay en el repo se publica en Pages salvo lo excluido en `_config.yml` (hoy: `CLAUDE.md`). Ojo: el repo es público, así que en GitHub todo se puede leer igualmente.
+- **Mientras esté en GitHub Pages es una demo**: `noindex, nofollow`, sin `canonical` ni `og:url`. **Revertir cuando haya dominio propio**: volver a `index, follow`, añadir `<link rel="canonical">` y `og:url` con el dominio, y cambiar el `url` del JSON-LD (hoy `https://scilasystems-maker.github.io/web-merceria-belen/`) por el dominio.
 
 ## Forma de trabajar
 
@@ -25,33 +26,45 @@ Web de **Mercería Belén**, mercería de barrio en La Viña (Lorca, Murcia). Cl
 | Qué venden | Mercería · lencería y corsetería · moda de mujer y de hombre · ropa de bebé y niño |
 | Especialidad | Tallas grandes de mujer |
 
-## Datos que aparecen en la web y NO están confirmados
+## Datos de la ficha discoverinmurcia
 
-Revisar con el cliente antes de darlos por buenos:
+**Fuente: ficha discoverinmurcia, pendiente de confirmar con la clienta.** Se mantienen en la web:
 
+- «Trato cercano».
+- «Principales marcas» / «Primeras marcas».
+- «Precios muy competitivos» / «Buenos precios».
+- «Complementos».
+- Email `belenpadilla39@gmail.com` (pie de página).
+- Coordenadas 37.66462, -1.70387 (JSON-LD y enlace a Google Maps).
+- Nombre «Mercería Lencería Belén» (`alternateName` del JSON-LD).
+
+## Pendientes de confirmar con la clienta
+
+- **WhatsApp en el 690 70 38 62**: lo confirma ScilaAI con la clienta. El formulario y el botón flotante dependen de ello. No tocar mientras tanto.
 - **Domingo cerrado** (se deduce del horario, pero no está dicho).
-- **WhatsApp en el 690 70 38 62**: todo el formulario y el botón flotante dependen de esto.
-- **Email** `belenpadilla39@gmail.com` (pie de página).
-- **Dominio** `www.merceriabelen.es` (canonical, og:url, JSON-LD). Hoy no es la URL real de la web.
-- **Coordenadas** 37.66462, -1.70387 (JSON-LD y enlace a Google Maps).
-- `alternateName: "Mercería Lencería Belén"` y `priceRange: "€€"` en el JSON-LD.
-- Textos comerciales: «principales marcas del sector», «precios muy competitivos», «Primeras marcas», «Buenos precios», «si no lo tenemos, te decimos dónde encontrarlo».
-- Productos concretos que no están en los datos: pijamas, fajas, complementos, canastilla, ropa interior de caballero.
-- Festivos y horario de verano.
+- **Festivos y horario de verano.**
+- **Datos legales**: titular, NIF y email de contacto. En la web aparece «Datos del titular pendientes de publicar» (`.pendiente`, estilo discreto en gris cursiva).
+- **Dominio propio**: no hay. `merceriabelen.es` era una suposición y ya no aparece en la web.
 - Redes sociales (no hay ninguna en la web).
 - Enlace de créditos `https://www.scilaai.com`.
 
+## Retirados de la web hasta que la clienta los confirme
+
+No tienen fuente. No volver a ponerlos sin confirmación:
+
+- Pijamas, fajas y canastilla.
+- `priceRange: "€€"` del JSON-LD.
+- «Aquí te conocen, te escuchan y, si no lo tenemos, te decimos dónde encontrarlo» (párrafo de Por qué Belén). Queda solo «Formamos parte del Área Comercial de La Viña.».
+- «de señora y caballero» en la tarjeta de lencería (queda «Sujetadores, braguitas y ropa interior.»).
+
 ## Pendientes `<!-- EDITAR -->` en index.html
 
-1. Dominio definitivo (canonical) — línea ~10.
-2. `og:image` 1200×630 con foto real del escaparate — línea ~17.
+1. Demo en GitHub Pages: `noindex` y sin canonical/og:url; revertir con dominio propio — `<head>`.
+2. `og:image` 1200×630 con foto real del escaparate — `<head>`.
 3. Confirmar horario actual, festivos y si cambia en verano — sección Visítanos.
 4. Confirmar que el 690 70 38 62 tiene WhatsApp — antes del formulario.
 5. Confirmar email y redes sociales — pie de página.
-6. Completar los datos legales (en amarillo) y revisar con asesoría — modales legales:
-   - Titular (nombre y apellidos / razón social)
-   - NIF
-   - Email de contacto (aviso legal y privacidad)
+6. Sustituir los textos `.pendiente` de los modales legales por titular, NIF y email reales, y revisar con asesoría.
 
 ## Identidad visual
 

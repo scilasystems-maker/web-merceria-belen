@@ -5,15 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mercería Belén · Mercería, lencería y moda en La Viña, Lorca</title>
 <meta name="description" content="Mercería Belén, en el barrio de La Viña (Lorca): mercería, lencería, moda de mujer y hombre, especialistas en tallas grandes de mujer y ropa de bebé y niño. Ctra. de Granada, 19. Tel. 690 70 38 62.">
-<meta name="robots" content="index, follow">
+<!-- EDITAR: demo en GitHub Pages. Con dominio propio: volver a "index, follow" y añadir canonical y og:url -->
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#241226">
-<!-- EDITAR: dominio definitivo -->
-<link rel="canonical" href="https://www.merceriabelen.es/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Mercería Belén · La Viña, Lorca">
 <meta property="og:description" content="Mercería, lencería y moda para mujer, hombre y bebé. Especialistas en tallas grandes. Trato cercano en el barrio de La Viña.">
-<meta property="og:url" content="https://www.merceriabelen.es/">
 <!-- EDITAR: og:image (1200x630) con foto real del escaparate -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23E0485A'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%23F5EEE3' stroke-width='2' stroke-dasharray='4 4'/%3E%3Cg fill='%23F5EEE3'%3E%3Ccircle cx='25' cy='25' r='4'/%3E%3Ccircle cx='39' cy='25' r='4'/%3E%3Ccircle cx='25' cy='39' r='4'/%3E%3Ccircle cx='39' cy='39' r='4'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +25,7 @@
   "name": "Mercería Belén",
   "alternateName": "Mercería Lencería Belén",
   "description": "Mercería, lencería y moda de mujer, hombre, bebé y niño en el barrio de La Viña (Lorca). Especialistas en tallas grandes de mujer.",
-  "url": "https://www.merceriabelen.es/",
+  "url": "https://scilasystems-maker.github.io/web-merceria-belen/",
   "telephone": "+34690703862",
   "address": {
     "@type": "PostalAddress",
@@ -43,8 +41,7 @@
     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "17:00", "closes": "20:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "13:30" }
   ],
-  "areaServed": "Lorca",
-  "priceRange": "€€"
+  "areaServed": "Lorca"
 }
 </script>
 
@@ -342,7 +339,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 .modal-dentro p,.modal-dentro li{font-size:15px;color:var(--tinta-2);margin-bottom:8px}
 .modal-dentro ul{padding-left:20px}
 .cerrar{position:sticky;top:0;float:right;margin:-16px -16px 0 0;width:42px;height:42px;border-radius:50%;border:0;background:var(--tinta);color:var(--lino);font-size:22px;cursor:pointer}
-.pendiente{background:#FFF1C2;padding:0 4px;border-radius:4px}
+.pendiente{color:var(--gris);font-style:italic}
 
 /* ---------- Aparición al hacer scroll ---------- */
 .aparece{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1)}
@@ -452,7 +449,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
       <div class="datos-rapidos aparece d4">
         <div><b>Hombre y mujer</b>moda y complementos</div>
         <div><b>Tallas grandes</b>especialistas en mujer</div>
-        <div><b>Bebé y niño</b>ropita y canastilla</div>
+        <div><b>Bebé y niño</b>ropita para los peques</div>
       </div>
     </div>
 
@@ -500,8 +497,8 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 <div class="cinta" aria-hidden="true">
   <div class="reglas"></div>
   <div class="pista">
-    <ul><li>Hilos</li><li>Botones</li><li>Cremalleras</li><li>Lencería</li><li>Corsetería</li><li>Pijamas</li><li>Moda mujer</li><li>Tallas grandes</li><li>Moda hombre</li><li>Ropa interior</li><li>Bebé</li><li>Complementos</li></ul>
-    <ul><li>Hilos</li><li>Botones</li><li>Cremalleras</li><li>Lencería</li><li>Corsetería</li><li>Pijamas</li><li>Moda mujer</li><li>Tallas grandes</li><li>Moda hombre</li><li>Ropa interior</li><li>Bebé</li><li>Complementos</li></ul>
+    <ul><li>Hilos</li><li>Botones</li><li>Cremalleras</li><li>Lencería</li><li>Corsetería</li><li>Moda mujer</li><li>Tallas grandes</li><li>Moda hombre</li><li>Ropa interior</li><li>Bebé</li><li>Complementos</li></ul>
+    <ul><li>Hilos</li><li>Botones</li><li>Cremalleras</li><li>Lencería</li><li>Corsetería</li><li>Moda mujer</li><li>Tallas grandes</li><li>Moda hombre</li><li>Ropa interior</li><li>Bebé</li><li>Complementos</li></ul>
   </div>
   <div class="reglas abajo"></div>
 </div>
@@ -541,7 +538,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
           <path d="M8 42 C 14 34, 28 32, 40 44 C 52 32, 66 34, 72 42 C 70 56, 54 60, 40 48 C 26 60, 10 56, 8 42 Z" fill="#FBF7F1"/>
           <path d="M40 44 V 48"/>
         </svg>
-        <div><h3>Lencería y corsetería</h3><p>Sujetadores, braguitas, fajas, pijamas y ropa interior de señora y caballero.</p></div>
+        <div><h3>Lencería y corsetería</h3><p>Sujetadores, braguitas y ropa interior.</p></div>
       </article>
 
       <article class="tarjeta t-bebe aparece d2">
@@ -564,7 +561,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 
       <article class="tarjeta t-hombre aparece d1">
         <div class="fila">
-          <div><h3>Moda hombre</h3><p>Ropa y complementos para caballero, ropa interior y pijamas de buena calidad para todos los días.</p></div>
+          <div><h3>Moda hombre</h3><p>Ropa y complementos para caballero, y ropa interior de buena calidad para todos los días.</p></div>
           <svg class="icono" viewBox="0 0 80 80" fill="none" stroke="#241226" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M28 10 L 40 18 L 52 10 L 70 20 L 64 34 L 58 31 L 58 70 L 22 70 L 22 31 L 16 34 L 10 20 Z" fill="#DCE5D6"/>
             <path d="M28 10 L 36 24 L 40 18 L 44 24 L 52 10"/>
@@ -603,7 +600,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
         <span class="num">03 — Por qué Belén</span>
         <h2>Comercio de barrio,<br>con <em>oficio</em>.</h2>
       </div>
-      <p class="aparece d1">Formamos parte del Área Comercial de La Viña. Aquí te conocen, te escuchan y, si no lo tenemos, te decimos dónde encontrarlo.</p>
+      <p class="aparece d1">Formamos parte del Área Comercial de La Viña.</p>
     </div>
     <div class="motivos">
       <div class="motivo aparece">
@@ -800,16 +797,15 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
 </a>
 
 <!-- ================= MODALES LEGALES ================= -->
-<!-- EDITAR: completar los datos marcados en amarillo antes de publicar y revisar con asesoría -->
+<!-- EDITAR: sustituir los textos .pendiente por titular, NIF y email reales y revisar con asesoría -->
 <dialog id="modal-aviso"><div class="modal-dentro">
   <button class="cerrar" aria-label="Cerrar">×</button>
   <h3>Aviso legal</h3>
   <p>En cumplimiento de la Ley 34/2002 (LSSI-CE), se informa de los datos del titular de este sitio web:</p>
   <ul>
-    <li>Titular: <span class="pendiente">[Nombre y apellidos / razón social]</span></li>
-    <li>NIF: <span class="pendiente">[NIF]</span></li>
+    <li>Titular y NIF: <span class="pendiente">Datos del titular pendientes de publicar</span></li>
     <li>Domicilio: Ctra. de Granada, 19 Bajo, 30800 Lorca (Murcia)</li>
-    <li>Teléfono: 690 70 38 62 · Email: <span class="pendiente">[email de contacto]</span></li>
+    <li>Teléfono: 690 70 38 62 · Email: <span class="pendiente">pendiente de publicar</span></li>
   </ul>
   <h4>Uso del sitio</h4>
   <p>El acceso a esta web es gratuito e implica la aceptación de estas condiciones. Los contenidos tienen carácter informativo; precios y disponibilidad deben confirmarse en tienda.</p>
@@ -821,7 +817,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   <button class="cerrar" aria-label="Cerrar">×</button>
   <h3>Política de privacidad</h3>
   <h4>Responsable</h4>
-  <p><span class="pendiente">[Nombre / razón social]</span>, NIF <span class="pendiente">[NIF]</span>, Ctra. de Granada, 19 Bajo, 30800 Lorca.</p>
+  <p><span class="pendiente">Datos del titular pendientes de publicar</span>. Ctra. de Granada, 19 Bajo, 30800 Lorca.</p>
   <h4>Finalidad</h4>
   <p>Atender las consultas que nos envíes a través del formulario, que se abren en WhatsApp con el texto que escribes. Esta web no guarda los datos del formulario: el mensaje solo llega si tú lo envías desde WhatsApp.</p>
   <h4>Legitimación</h4>
@@ -831,7 +827,7 @@ dialog::backdrop{background:rgba(36,18,38,.55);backdrop-filter:blur(4px)}
   <h4>Destinatarios</h4>
   <p>No se ceden datos a terceros, salvo obligación legal. WhatsApp (Meta) trata los mensajes conforme a su propia política de privacidad.</p>
   <h4>Derechos</h4>
-  <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a <span class="pendiente">[email]</span>, y reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
+  <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad dirigiéndote por escrito a Ctra. de Granada, 19 Bajo, 30800 Lorca (email <span class="pendiente">pendiente de publicar</span>), y reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
 </div></dialog>
 
 <dialog id="modal-cookies"><div class="modal-dentro">
