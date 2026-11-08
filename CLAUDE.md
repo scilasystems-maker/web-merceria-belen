@@ -126,7 +126,7 @@ Otros tokens: `--radio: 22px`, `--sombra`, `--ancho: 1180px`.
 - La barra móvil se oculta (`.oculta`) mientras se escribe en el formulario, para que no tape el campo con el teclado abierto.
 - Parallax de la escena con el ratón.
 - Formulario → `wa.me` con texto prellenado, trampa antispam `.trampa`.
-- Modales legales con `<dialog>`.
+- Modales legales con `<dialog>`. Necesitan `margin:auto` en su CSS: el reset `*{margin:0}` quita el centrado que pone el navegador. Cualquier `<dialog>` nuevo usa la misma regla.
 - Respeta `prefers-reduced-motion`.
 
 ## Animación de la portada
